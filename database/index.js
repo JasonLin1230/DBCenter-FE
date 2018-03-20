@@ -11,12 +11,12 @@ module.exports = (sql) => {
         pool.getConnection((err, connection) => {
             if (err) throw '数据库连接异常!'
 
-            connection.query(sql, (error) => {
+            connection.query(sql, (error, rows) => {
                 connection.release()
                 if (error) {
                     reject(error)
                 } else {
-                    resolve()
+                    resolve(rows)
                 }
             })
         })

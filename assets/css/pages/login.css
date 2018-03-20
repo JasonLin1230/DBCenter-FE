@@ -1,0 +1,39 @@
+.login-form {
+    position: relative;
+    overflow: hidden;
+}
+
+.register-form {
+    padding-bottom: 3px;
+}
+.register-int {
+    width: 60%
+}
+
+.register-btn {
+    width: 39%;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.register-btn button {
+    width: 100%;
+}
+
+.retrieve-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 519px;
+    z-index: 100;
+    transform: translateY(-100%);
+    transition: all .5s;
+}
+.retrieve-wrapper.active {
+    transform: translateY(0);
+}
+
+.backBtn {
+    cursor: pointer;
+}
