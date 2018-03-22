@@ -15,7 +15,6 @@ const app = new Koa()
 // ejs配置
 render(app, {
     root: path.join(__dirname, 'views'),
-    layout: false,
     cache: false
 })
 

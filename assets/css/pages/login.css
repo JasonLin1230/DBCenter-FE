@@ -1,26 +1,32 @@
+html, body, .login-container {
+    height: 100%;
+}
+
 .login-form {
     position: relative;
     overflow: hidden;
 }
 
+/* 注册 */
 .register-form {
     padding-bottom: 3px;
 }
-.register-int {
-    width: 60%
+/* 验证码 */
+.register-pin-int {
+    width: 60%;
 }
-
-.register-btn {
+.register-pin-btn {
     width: 39%;
     position: absolute;
     top: 0;
     right: 0;
 }
-.register-btn button {
+.register-pin-btn button {
     width: 100%;
 }
 
-.retrieve-wrapper {
+/* 找回密码 */
+.getpwd-wrapper {
     position: absolute;
     top: 0;
     right: 0;
@@ -30,10 +36,10 @@
     transform: translateY(-100%);
     transition: all .5s;
 }
-.retrieve-wrapper.active {
+.getpwd-wrapper.active {
     transform: translateY(0);
 }
-
-.backBtn {
+/* 返回登陆界面按钮 */
+.getpwd-backBtn {
     cursor: pointer;
 }

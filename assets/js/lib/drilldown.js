@@ -318,7 +318,7 @@
 			});
 		}
 
-		// Retrieve cookie value and set active items
+		// getpwd cookie value and set active items
 		function checkCookie(cookieId, obj){
 			var cookieVal = $.cookie(cookieId);
 			if(cookieVal != null){
