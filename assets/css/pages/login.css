@@ -1,7 +1,3 @@
-html, body, .login-container {
-    height: 100%;
-}
-
 .login-form {
     position: relative;
     overflow: hidden;
