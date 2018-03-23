@@ -5,11 +5,11 @@ module.exports = async function() {
     try {
         // 创建dataCenter数据库
         await db('CREATE DATABASE IF NOT EXISTS dataCenter;')
-        console.log('dataCenter database created!')
+        console.log('created dataCenter database!')
 
         // 使用dataCenter数据库
         await db('USE dataCenter')
-        console.log('database dataCenter used!')
+        console.log('used database dataCenter!')
 
         // 创建用户表
         const createMainSQL = `
@@ -19,7 +19,7 @@ module.exports = async function() {
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         `
         await db(createMainSQL)
-        console.log('users table created!')
+        console.log('created users table!')
     } catch(err) {
         console.error(err)
     }

@@ -10,7 +10,11 @@ const myCache = new NodeCache( { stdTTL: 60 } )
 
 // 页面
 router.get('/', async (ctx) => {
+    await db('USE dataCenter')
+    console.log('database dataCenter used!')
+
     await ctx.render('login')
+    console.log('Enter the login Page!')
 })
 
 // 用户登陆
@@ -20,6 +24,8 @@ router.post('/', async (ctx) => {
         const result = await db(`SELECT * FROM USERS WHERE phone="${phone}" AND password="${password}";`)
 
         if (result.length) {
+            ctx.session = { phone }
+            
             ctx.body = {
                 code: 0,
                 msg: 'success'
@@ -36,6 +42,12 @@ router.post('/', async (ctx) => {
             msg: err.message
         }
     }
+})
+
+// 退出登录
+router.get('/layout', async (ctx) => {
+    ctx.session = {}
+    ctx.response.redirect('/login')
 })
 
 // 注册

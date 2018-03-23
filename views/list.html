@@ -1,3 +1,6 @@
+<link href="/assets/css/pages/list.css" rel="stylesheet">
+<script type="text/javascript" src="/assets/js/pages/list.js"></script>
+
 <body>
     <!-- header -->
     <% include ../components/header.html %>
@@ -10,49 +13,21 @@
         <div class="page-content">
 
             <!-- Main sidebar -->
-            <div class="sidebar sidebar-main sidebar-default">
+			<div class="sidebar sidebar-main">
                 <div class="sidebar-content">
 
                     <!-- Main navigation -->
-                    <div class="sidebar-category sidebar-category-visible">
+                    <div id="tables-wrapper" class="sidebar-category sidebar-category-visible">
                         <div class="category-title h6">
-                            <span>Main sidebar</span>
-                            <ul class="icons-list">
-                                <li><a href="#" data-action="collapse"></a></li>
-                            </ul>
+                            <span>数据表</span>
+                        </div>
+
+                        <div id="tableInsertBox" class="category-content sidebar-user">
+                            <button type="button" class="table-insert btn btn-info btn-block">新建</button>
                         </div>
 
                         <div class="category-content no-padding">
-                            <ul class="navigation navigation-main navigation-accordion">
-
-                                <!-- Main -->
-                                <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
-                                <li><a href="../index.html"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
-                                <li>
-                                    <a href="#"><i class="icon-stack"></i> <span>Starter kit</span></a>
-                                    <ul>
-                                        <li><a href="1_col.html">1 column</a></li>
-                                        <li class="active"><a href="2_col.html">2 columns</a></li>
-                                        <li>
-                                            <a href="#">3 columns</a>
-                                            <ul>
-                                                <li><a href="3_col_dual.html">Dual sidebars</a></li>
-                                                <li><a href="3_col_double.html">Double sidebars</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="4_col.html">4 columns</a></li>
-                                        <li><a href="layout_boxed.html">Boxed layout</a></li>
-                                        <li class="navigation-divider"></li>
-                                        <li><a href="layout_navbar_fixed_main.html">Fixed top navbar</a></li>
-                                        <li><a href="layout_navbar_fixed_secondary.html">Fixed secondary navbar</a></li>
-                                        <li><a href="layout_navbar_fixed_both.html">Both navbars fixed</a></li>
-                                        <li><a href="layout_sidebar_sticky.html">Sticky sidebar</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="../changelog.html"><i class="icon-list-unordered"></i> <span>Changelog</span></a></li>
-                                <!-- /main -->
-
-                            </ul>
+                            <ul id="tables" class="navigation"></ul>
                         </div>
                     </div>
                     <!-- /main navigation -->
@@ -60,7 +35,6 @@
                 </div>
             </div>
             <!-- /main sidebar -->
-
 
             <!-- Main content -->
             <div class="content-wrapper">
@@ -280,4 +254,39 @@
         <p>欢迎STAR, &nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/wrz199306/datacenter" target="_blank">https://github.com/wrz199306/datacenter</a> &nbsp;&nbsp;&nbsp;&nbsp;您的支持是我最大的动力!</p>
     </div>
     <!-- /footer -->
+
+
+    <div id="modalTableInsert" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h5 class="modal-title">新建数据表</h5>
+                </div>
+
+                <div class="modal-body">
+                    <form id="insertTableForm">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>数据表名称</label>
+                                    <input id="inserTableName" name="name" placeholder="不区分大小写" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    
+                    <div id="attrs"></div>
+
+                    <a id="addAttr" href="javascript:void(0)">添加属性</a>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+                    <button id="inertTableSubmit" type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>

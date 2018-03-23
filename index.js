@@ -4,7 +4,9 @@ const render = require('koa-ejs')
 const path = require('path')
 const static = require('koa-static')
 const bodyParser = require('koa-bodyparser')
+const session = require('koa-session-minimal')
 
+const nocache = require('./middleware/nocache')
 const route = require('./routes')
 const config = require('./config')
 
@@ -20,7 +22,9 @@ render(app, {
 
 app
     .use(static(__dirname)) // 静态资源文件加载
-    .use(bodyParser()) //
+    .use(nocache)
+    .use(bodyParser()) // 解析请求体参数
+    .use(session())
     .use(logger()) // 日志
     .use(route.routes()) // 路由
 

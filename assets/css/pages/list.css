@@ -1,0 +1,63 @@
+#tables {
+    min-height: 500px;
+}
+
+#tableInsertBox {
+    display: none;
+}
+
+.table-delete {
+    display: none;
+    font-size: 15px;
+    color: #878d99;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+}
+.table-delete:hover {
+    background: #ef5350;
+    color: #fff;
+    border-radius: 50%;
+}
+
+.table-item:hover .table-delete {
+    display: inline;
+}
+
+/* 暂无数据表 */
+.no-tables {
+    text-align: center;
+    line-height: 500px;
+}
+
+.table-insert-box {
+    padding: 20px;
+}
+
+.attr-item {
+    position: relative;
+    padding-top: 20px;
+    border-top: 1px dashed #878d99;
+}
+
+.attr-item:hover .close-attr {
+    opacity: 1;
+}
+
+.close-attr {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: 0;
+    transition: all .3s;
+    cursor: pointer;
+}
+
+.close-attr:hover {
+    transform: scale(1.1)
+}
+
+.close-attr.hide {
+    display: none;
+}

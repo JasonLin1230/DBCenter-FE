@@ -1,26 +1,6 @@
 $(function() {
-
-	// uniform控件初始化
-	$('.styled').uniform();
-
-	// validate手机验证
-	$.validator.addMethod("checkPhone", function(value, element) {  
-		var checkPhone = /^[1][3,4,5,7,8][0-9]{9}$/;  
-		return this.optional(element) || (checkPhone.test(value)) 
-	}, '请输入正确的手机号码！')
-
-
-
 	// 登陆validate初始化
 	$('#loginForm').validate({
-		errorClass: 'validation-error-label',
-		successClass: 'validation-valid-label',
-		highlight: function(element, errorClass) {
-			$(element).removeClass(errorClass);
-		},
-		unhighlight: function(element, errorClass) {
-			$(element).removeClass(errorClass);
-		},
 		rules: {
 			phone: {
 				required: true
@@ -71,13 +51,11 @@ $(function() {
 			} else if (res.code === 1) {
 				new PNotify({
 					text: '用户名或密码错误',
-					delay: 1800,
 					addclass: 'bg-warning'
 				})
 			} else {
 				new PNotify({
 					text: '服务器错误，请稍后再试！',
-					delay: 1800,
 					addclass: 'bg-danger'
 				})
 			}
@@ -92,24 +70,10 @@ $(function() {
 
 	// 注册账户validate初始化
 	$('#registerForm').validate({
-		errorClass: 'validation-error-label',
-		successClass: 'validation-valid-label',
-		highlight: function(element, errorClass) {
-			$(element).removeClass(errorClass)
-			if ($(element).prop('id') === 'registerPhone') {
-				$('#sendPhonePin').prop('disabled', true)
-			}
-		},
-		unhighlight: function(element, errorClass) {
-			$(element).removeClass(errorClass)
-			if ($(element).prop('id') === 'registerPhone') {
-				$('#sendPhonePin').prop('disabled', false)
-			}
-		},
 		rules: {
 			phone: {
 				required: true,
-				checkPhone: true,
+				phone: true,
 				remote:"/login/validatePhone?isRegister=true"
 			},
 			password: {
@@ -175,7 +139,6 @@ $(function() {
 			if (res.code === 0) {
 				new PNotify({
 					text: '注册成功！',
-					delay: 1800,
 					addclass: 'bg-success'
 				})
 
@@ -185,7 +148,6 @@ $(function() {
 			} else {
 				new PNotify({
 					text: '服务器错误，请稍后再试！',
-					delay: 1800,
 					addclass: 'bg-danger'
 				})
 			}
@@ -235,18 +197,10 @@ $(function() {
 
 	// 获取密码validate初始化
 	$('#getPwdForm').validate({
-		errorClass: 'validation-error-label',
-		successClass: 'validation-valid-label',
-		highlight: function(element, errorClass) {
-			$(element).removeClass(errorClass);
-		},
-		unhighlight: function(element, errorClass) {
-			$(element).removeClass(errorClass);
-		},
 		rules: {
 			phone: {
 				required: true,
-				checkPhone: true,
+				phone: true,
 				remote:"/login/validatePhone?isRegister=false"
 			}
 		},
@@ -276,7 +230,6 @@ $(function() {
 			if (res.code === 0) {
 				new PNotify({
 					text: '密码已发送！',
-					delay: 1800,
 					addclass: 'bg-success'
 				})
 		
@@ -286,7 +239,6 @@ $(function() {
 			} else {
 				new PNotify({
 					text: '服务器请求失败！',
-					delay: 1800,
 					addclass: 'bg-danger'
 				})
 			}
