@@ -16,10 +16,10 @@ $(function() {
         errorClass: 'validation-error-label',
 		successClass: 'validation-valid-label',
 		highlight: function(element, errorClass) {
-			$(element).removeClass(errorClass);
+			$(element).removeClass(errorClass)
 		},
 		unhighlight: function(element, errorClass) {
-			$(element).removeClass(errorClass);
+			$(element).removeClass(errorClass)
 		}
     })
 
@@ -28,9 +28,19 @@ $(function() {
 		return this.optional(element) || (checkPhone.test(value)) 
     }, '请输入正确的手机号码！')
     
-    $.validator.addMethod("word", function(value, element) {  
-		var checkWord = /\w+/
-		return this.optional(element) || (checkWord.test(value)) 
-	}, '请输入正确的手机号码！')
+    $.validator.addMethod("dbName", function(value, element) {  
+		var checkDbName = /^[a-zA-z_]\w*$/
+		return this.optional(element) || (checkDbName.test(value)) 
+    }, '请输入正确的手机号码！')
+    
+    $.extend( $.fn.dataTable.defaults, {
+        autoWidth: false,
+        dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"p>',
+        language: {
+            search: '_INPUT_',
+            lengthMenu: '<span>显示:</span> _MENU_',
+            paginate: { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+        }
+    })
 
 })

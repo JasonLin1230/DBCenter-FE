@@ -1,4 +1,6 @@
 $(function() {
+    var attrList = []
+
     renderTables()
 
     // 数据表渲染
@@ -15,6 +17,8 @@ $(function() {
                 var targetTable = $tables.attr('data-target')
                 
                 $tables.html(getTablesTemplate(tables, targetTable))
+
+                renderTable(tables)
                 
             } else {
                 $('#tableInsertBox').hide()
@@ -42,6 +46,33 @@ $(function() {
         return template
     }
 
+    // 渲染数据表表格
+    function renderTable(tables) {
+        var ajaxOption = {}
+        if (tables.length) {
+            ajaxOption = {
+                url: '/getTableInfo',
+                method: 'POST',
+                data: function() {
+                    return { target: $('#tables-wrapper').attr('data-target') || tables[0] }
+                }
+            }
+        } else {
+            ajaxOption = null
+        }
+        // 数据表列表
+        $('.table').dataTable({
+            ajax: ajaxOption
+        })
+
+        $('.dataTables_length select').select2({
+            minimumResultsForSearch: Infinity,
+            width: 'auto'
+        })
+
+        $('.dataTables_filter input').prop('placeholder', '请输入关键字搜索')
+    }
+
     $('#tables-wrapper').on('click', '.table-insert', function() {
         attrList = [
             {
@@ -53,19 +84,22 @@ $(function() {
         ]
 
         $('#modalTableInsert').modal('show')
+
+        // 新建数据表
+        attrList = [
+            {
+                name: '',
+                type: 'string',
+                length: 0,
+                default: '',
+                notNull: false,
+                unique: false
+            }
+        ]
+
+        renderTableInsertAttr()
+
     })
-
-    // 新建数据表
-    var attrList = [
-        {
-            name: '',
-            type: 'string',
-            notNull: false,
-            unique: false
-        }
-    ]
-
-    renderTableInsertAttr()
 
     // 渲染新建数据表属性
     function renderTableInsertAttr() {
@@ -78,7 +112,7 @@ $(function() {
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label>属性名称</label>
-                                    <input class="attrName form-control" placeholder="不区分大小写" name="name" value="${item.name}" type="text" class="form-control">
+                                    <input class="attrName form-control" placeholder="不区分大小写" name="name" value="${item.name}">
                                 </div>
 
                                 <div class="col-sm-6">
@@ -87,6 +121,20 @@ $(function() {
                                         <option value="string" ${item.type === 'string' ? 'selected' : ''}>字符串</option>
                                         <option value="number" ${item.type === 'number' ? 'selected' : ''}>数字</option>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>字段长度</label>
+                                    <input class="attrLength form-control" name="length" value="${item.length}">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label>默认值</label>
+                                    <input class="attrDefault form-control" name="default" value="${item.default}">
                                 </div>
                             </div>
                         </div>
@@ -103,7 +151,7 @@ $(function() {
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <div class="checkbox styled">
+                                    <div class="checkbox styled uniqueBox" style="display: ${item.notNull ? 'block' : 'none'}">
                                         <label>
                                             <input type="checkbox" ${item.unique ? 'checked' : ''} class="unique styled">
                                             是否唯一
@@ -123,6 +171,10 @@ $(function() {
             autoWidth: false
         })
 
+        $('.attrLength').TouchSpin({
+            min: 0
+        })
+
         setInsertTableAttrValid()
     }
 
@@ -131,6 +183,8 @@ $(function() {
         attrList.push({
             name: '',
             type: 'string',
+            length: 0,
+            default: '',
             notNull: false,
             unique: false
         })
@@ -160,6 +214,18 @@ $(function() {
         attrList[index].type = $(this).val()
     })
 
+    // 字段长度
+    $('#attrs').on('change', '.attrLength', function() {
+        var index = $(this).parent().parent().parent().parent().parent().attr('data-index')
+        attrList[index].length = $(this).val()
+    })
+
+    // 默认值
+    $('#attrs').on('change', '.attrDefault', function() {
+        var index = $(this).parent().parent().parent().parent().attr('data-index')
+        attrList[index].default = $(this).val()
+    })
+
     // 是否必填
     $('#attrs').on('change', '.attrNotNull', function() {
         var $attrItem = $(this).parent().parent().parent().parent().parent().parent().parent().parent()
@@ -170,7 +236,9 @@ $(function() {
         attrList[index].notNull = isChecked
 
         if (!isChecked) {
-            $.uniform.update($attrItem.find('.unique').prop('checked', true))
+            $attrItem.find('.uniqueBox').hide()
+        } else {
+            $attrItem.find('.uniqueBox').show()
         }
     })
 
@@ -186,21 +254,15 @@ $(function() {
         rules: {
             name: {
                 required: true,
-                word: true,
+                dbName: true,
                 remote:"/validateTableName"
-            },
-            id: {
-                word: true
             }
         },
         messages: {
             name: {
                 required: '请输入表名',
-                word: '请使用字母、数字、下划线',
+                dbName: '字母、下划线开头，由字母、数字、下划线组成',
                 remote: '该数据表已存在，请使用其他名称'
-            },
-            id: {
-                word: '请使用字母、数字、下划线'
             }
         }
     })
@@ -212,13 +274,13 @@ $(function() {
                 rules: {
                     name: {
                         required: true,
-                        word: true
+                        dbName: true
                     }
                 },
                 messages: {
                     name: {
                         required: '请输入属性名',
-                        word: '请使用字母、数字、下划线'
+                        dbName: '字母、下划线开头，由字母、数字、下划线组成'
                     }
                 }
             })
@@ -287,4 +349,5 @@ $(function() {
             })
         })
     })
+
 })

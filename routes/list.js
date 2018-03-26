@@ -57,10 +57,13 @@ router.post('insertTable', async (ctx) => {
     for (let i = 0; i < attrs.length; i++) {
         const attr = attrs[i]
 
+        if (attr.default && attr.type === 'string') attr.default = `"${attr.default}"`
+
         attrSql += `${ attr.name } 
-                    ${ attr.type === 'string' ? 'VARCHAR(255)' : 'INT' } 
+                    ${ attr.type === 'string' ? 'VARCHAR' : 'INT' }(${ attr.length })
                     ${ attr.notNull === 'true' ? 'NOT NULL' : '' }
-                    ${ attr.unique === 'true' ? 'UNIQUE' : '' }
+                    ${ attr.unique === 'true' && attr.unique === 'true' ? 'UNIQUE' : '' }
+                    ${ attr.default !== '' ? 'DEFAULT ' + attr.default : '' }
                     ${ i === attrs.length - 1 ? ')' : ',' }`
     }
 
@@ -116,6 +119,26 @@ router.get('validateTableName', async (ctx) => {
         const result = await db(`SHOW TABLES LIKE "${name}"`)
 
         ctx.body = !(result.length)
+
+    } catch(err) {
+        console.error(err.message)
+        ctx.body = {
+            code: 2,
+            msg: err.message
+        }
+    }
+})
+
+// 获取数据表数据
+router.post('getTableInfo', async (ctx) => {
+    const { target } = ctx.request.body
+    try {
+
+        const tableInfo = await db(`DESC ${target};`)
+
+        console.log(tableInfo)
+
+        ctx.body = tableInfo
 
     } catch(err) {
         console.error(err.message)

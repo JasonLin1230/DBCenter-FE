@@ -70,6 +70,15 @@ $(function() {
 
 	// 注册账户validate初始化
 	$('#registerForm').validate({
+		highlight: function(element, errorClass) {
+			console.log(111)
+			$(element).removeClass(errorClass)
+			if (element.id === 'registerPhone') $('#sendPhonePin').prop('disabled', true)
+		},
+		unhighlight: function(element, errorClass) {
+			$(element).removeClass(errorClass)
+			if (element.id === 'registerPhone') $('#sendPhonePin').prop('disabled', false)			
+		},
 		rules: {
 			phone: {
 				required: true,

@@ -3,6 +3,10 @@
     overflow: hidden;
 }
 
+.footer {
+    bottom: 0;
+}
+
 /* 注册 */
 .register-form {
     padding-bottom: 3px;
