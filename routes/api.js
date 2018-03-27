@@ -76,7 +76,6 @@ router.put('/:table', async (ctx) => {
 
     const { id, newAttrData } = ctx.request.body
 
-    console.log(newAttrData)
     const resAttrData = Object.entries(JSON.parse(newAttrData)).map((attr) => {
         return `${attr[0]}="${attr[1]}"`
     }).join(',')
@@ -108,7 +107,34 @@ router.put('/:table', async (ctx) => {
 
 router.get('/:table', async (ctx) => {
     const table = ctx.params.table
-    ctx.body = `${table}查询`
+
+    const condition = ctx.request.query.condition
+
+    const resCondition = Object.entries(JSON.parse(condition)).map((item) => {
+        return `${item[0]}="${item[1]}"`
+    }).join(' AND ')
+
+    const sql = `SELECT * from ${table} 
+                    WHERE ${resCondition};`
+
+    try {
+        console.log('data is selecting!')
+        console.log('sql:', sql)
+
+        const result = await db(sql)
+
+        console.log('selecting success')
+
+        ctx.body = {
+            code: 0,
+            data: result
+        }
+    } catch(err) {
+        ctx.body = {
+            code: 2,
+            msg: err.message
+        }
+    }
 })
 
 module.exports = router
