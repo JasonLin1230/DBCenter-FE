@@ -3,15 +3,14 @@ const router = new Router()
 
 const login = require('./login')
 const list = require('./list')
-const document = require('./document')
 const api = require('./api')
 
-const osAuth = require('../middleware/osAuth')
 const apiAuth = require('../middleware/apiAuth')
+const loginMD = require('../middleware/loginMD')
+const osMD = require('../middleware/osMD')
 
 router.use('/api', apiAuth, api.routes())
-router.use('/login', login.routes())
-router.use('/document', document.routes())
-router.use('/', osAuth, list.routes())
+router.use('/login', loginMD, login.routes())
+router.use('/', osMD, list.routes())
 
 module.exports = router

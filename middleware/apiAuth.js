@@ -4,10 +4,16 @@ module.exports = async function(ctx, next) {
     const { phone, secret } = ctx.headers
 
     try {
+        await db(`USE datacenter`)
+        console.log(`database datacenter used!`)
+
         const result = await db(`SELECT * FROM USERS WHERE phone="${phone}" AND password="${secret}";`)
 
         if (result.length === 1) {
-            
+            console.log(`User ${phone} Authentication Passed!`)
+
+            await db(`USE user_${phone}`)
+            console.log(`database user_${phone} used!`)
 
             await next()
         } else {

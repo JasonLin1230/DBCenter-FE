@@ -10,9 +10,6 @@ const myCache = new NodeCache( { stdTTL: 60 } )
 
 // 页面
 router.get('/', async (ctx) => {
-    await db('USE dataCenter')
-    console.log('database dataCenter used!')
-
     await ctx.render('login')
     console.log('Enter the login Page!')
 })

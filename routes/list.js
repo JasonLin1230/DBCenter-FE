@@ -6,14 +6,18 @@ const router = new Router()
 
 // 页面
 router.get('/', async (ctx) => {
+    const phone = ctx.session.phone
 
-    const tableName = ctx.query.tablename
-    await ctx.render('list', {
-        tableName
-    })
-
-    console.log('Enter the list Page!')
-
+    if (phone) {
+        const tableName = ctx.query.tablename
+        await ctx.render('list', {
+            tableName
+        })
+        console.log('Enter the list Page!')
+        
+    } else {
+        ctx.response.redirect('/login')
+    }
 })
 
 // 获取数据表
