@@ -32,15 +32,24 @@ $(function() {
 		var checkDbName = /^[a-zA-z_]\w*$/
 		return this.optional(element) || (checkDbName.test(value)) 
     }, '请输入正确的手机号码！')
+
+
+    $.fn.dataTable.ext.errMode = 'none';
     
     $.extend( $.fn.dataTable.defaults, {
         autoWidth: false,
-        dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"p>',
         language: {
             search: '_INPUT_',
             lengthMenu: '<span>显示:</span> _MENU_',
-            paginate: { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+            // 左下角显示信息
+            info: '_START_-_END_ of _TOTAL_',
+            // 无内容时左下角显示信息
+            infoEmpty: '没有数据',
+            infoFiltered: '(从 _MAX_ 条数据中检索)',
+            // 右下角分页
+            paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'},
+            // 搜索无内容时显示
+            zeroRecords: '没有符合搜索的数据',
         }
     })
-
 })

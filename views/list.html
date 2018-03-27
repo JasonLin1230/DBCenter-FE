@@ -13,7 +13,7 @@
         <div class="page-content">
 
             <!-- Main sidebar -->
-			<div class="sidebar sidebar-main">
+			<div class="sidebar sidebar-main sidebar-default">
                 <div class="sidebar-content">
 
                     <!-- Main navigation -->
@@ -42,12 +42,11 @@
                 <!-- Table -->
                 <div class="panel panel-flat">
                     <div class="panel-heading">
-                        <h5 class="panel-title">Basic table</h5>
-                        <div class="heading-elements">
-                            <ul class="icons-list">
-                                <li><a data-action="collapse"></a></li>
-                                <li><a data-action="close"></a></li>
-                            </ul>
+                        <h5 class="panel-title" id="table-title"></h5>
+                        
+                        <div class="search-box">
+                            <input placeholder="请输入字段名称进行搜索" type="text" class="form-control">
+                            <i class="icon-search4"></i>
                         </div>
                     </div>
 
@@ -55,38 +54,14 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
+                                    <th>字段名称</th>
+                                    <th>字段类型</th>
+                                    <th>字段长度</th>
+                                    <th>默认值</th>
+                                    <th>是否必填</th>
+                                    <th>是否唯一</th>                                    
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Eugene</td>
-                                    <td>Kopyov</td>
-                                    <td>@Kopyov</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Victoria</td>
-                                    <td>Baker</td>
-                                    <td>@Vicky</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>James</td>
-                                    <td>Alexander</td>
-                                    <td>@Alex</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Franklin</td>
-                                    <td>Morrison</td>
-                                    <td>@Frank</td>
-                                </tr>
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -136,7 +111,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
-                    <button id="inertTableSubmit" type="submit" class="btn btn-primary">保存</button>
+                    <button id="inertTableSubmit" type="submit" data-style="slide-right" class="btn btn-primary btn-ladda">保存</button>
                 </div>
             </div>
         </div>

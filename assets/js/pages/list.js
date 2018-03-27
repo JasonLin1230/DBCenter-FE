@@ -1,10 +1,12 @@
 $(function() {
     var attrList = []
 
-    renderTables()
+    var dt
+
+    renderTables($('#tables-wrapper').attr('data-target'))
 
     // 数据表渲染
-    function renderTables() {
+    function renderTables(targetTable) {
         var $tables = $('#tables')
 
         // 获取数据表数据
@@ -14,11 +16,13 @@ $(function() {
             if (tables.length) {
                 $('#tableInsertBox').show()
 
-                var targetTable = $tables.attr('data-target')
+                targetTable = targetTable || tables[0]
                 
                 $tables.html(getTablesTemplate(tables, targetTable))
 
-                renderTable(tables)
+                $('#table-title').html(targetTable)
+
+                renderTable(tables, targetTable)
                 
             } else {
                 $('#tableInsertBox').hide()
@@ -47,32 +51,55 @@ $(function() {
     }
 
     // 渲染数据表表格
-    function renderTable(tables) {
+    function renderTable(tables, targetTable) {
         var ajaxOption = {}
+
         if (tables.length) {
             ajaxOption = {
                 url: '/getTableInfo',
                 method: 'POST',
                 data: function() {
-                    return { target: $('#tables-wrapper').attr('data-target') || tables[0] }
+                    return { target: targetTable }
                 }
             }
         } else {
             ajaxOption = null
         }
+
         // 数据表列表
         $('.table').dataTable({
-            ajax: ajaxOption
+            ajax: ajaxOption,
+            ordering: false,
+            dom: '<"datatable-scroll">',
+            columnDefs: [
+                {
+                    targets: [0],
+                    searchable: true
+                },
+                {
+                    targets: [1, 2, 3, 4, 5],
+                    searchable: false
+                },
+                {
+                    targets: [4, 5],
+                    render: function(data){
+                        return data
+                          ? '<span class="label label-success launch-state">是</span>'
+                          : '<span class="label label-default launch-state">否</span>';
+                    }
+                }
+            ],
+            initComplete() {
+                var db = this
+                // 数据表属性搜索
+                $('.search-box input').on('input', function() {
+                    db.api().search($(this).val()).draw()
+                })
+            }
         })
-
-        $('.dataTables_length select').select2({
-            minimumResultsForSearch: Infinity,
-            width: 'auto'
-        })
-
-        $('.dataTables_filter input').prop('placeholder', '请输入关键字搜索')
     }
 
+    // 插入数据表
     $('#tables-wrapper').on('click', '.table-insert', function() {
         attrList = [
             {
@@ -90,7 +117,7 @@ $(function() {
             {
                 name: '',
                 type: 'string',
-                length: 0,
+                length: 128,
                 default: '',
                 notNull: false,
                 unique: false
@@ -100,6 +127,7 @@ $(function() {
         renderTableInsertAttr()
 
     })
+
 
     // 渲染新建数据表属性
     function renderTableInsertAttr() {
@@ -172,7 +200,8 @@ $(function() {
         })
 
         $('.attrLength').TouchSpin({
-            min: 0
+            min: 0,
+            max: 1024 * 1024,
         })
 
         setInsertTableAttrValid()
@@ -183,7 +212,7 @@ $(function() {
         attrList.push({
             name: '',
             type: 'string',
-            length: 0,
+            length: 128,
             default: '',
             notNull: false,
             unique: false
@@ -300,24 +329,30 @@ $(function() {
             if (!($(attrItems[i]).valid())) return
         }
 
+        var btnstate = Ladda.create(this)
+		btnstate.start()
+
         var data = {
             tableName: tableName,
             attrs: attrList
         }
 
         $.post('/insertTable', data, function(res) {
+            btnstate.stop()
+            
             if (res.code === 0) {
                 new PNotify({
 					text: `${tableName}表创建成功！`,
 					addclass: 'bg-success'
                 })
 
-                renderTables()
-                
-                $('#modalTableInsert').modal('hide')
+                setTimeout(function() {
+                    location.href = `/?tablename=${tableName}`
+                }, 1800)
             } else {
                 new PNotify({
-					text: `数据表创建失败！`,
+                    title: '数据表创建失败！',
+                    text: res.msg,
 					addclass: 'bg-danger'
 				})
             }
@@ -334,12 +369,14 @@ $(function() {
 
             $.post('/delTable',  { table: tableName }, function(res) {
                 if (res.code === 0) {
-                    renderTables()
-
                     new PNotify({
                         text: '部门删除成功！',
                         addclass: 'bg-success'
                     })
+
+                    setTimeout(function() {
+                        location.href = '/'
+                    }, 1800)
                 } else {
                     new PNotify({
                         text: '部门删除失败！',

@@ -6,22 +6,14 @@ const router = new Router()
 
 // 页面
 router.get('/', async (ctx) => {
-    const phone = ctx.session.phone
 
-    if (phone) {
-        await db(`USE user_${phone}`)
-        console.log(`database user_${phone} used!`)
+    const tableName = ctx.query.tablename
+    await ctx.render('list', {
+        tableName
+    })
 
-        const tableName = ctx.query.tablename
-    
-        await ctx.render('list', {
-            tableName
-        })
+    console.log('Enter the list Page!')
 
-        console.log('Enter the list Page!')
-    } else {
-        ctx.response.redirect('/login')
-    }
 })
 
 // 获取数据表
@@ -59,7 +51,7 @@ router.post('insertTable', async (ctx) => {
 
         if (attr.default && attr.type === 'string') attr.default = `"${attr.default}"`
 
-        attrSql += `${ attr.name } 
+        attrSql += `${ attr.name }
                     ${ attr.type === 'string' ? 'VARCHAR' : 'INT' }(${ attr.length })
                     ${ attr.notNull === 'true' ? 'NOT NULL' : '' }
                     ${ attr.unique === 'true' && attr.unique === 'true' ? 'UNIQUE' : '' }
@@ -136,9 +128,46 @@ router.post('getTableInfo', async (ctx) => {
 
         const tableInfo = await db(`DESC ${target};`)
 
-        console.log(tableInfo)
+        const tableResult = []
 
-        ctx.body = tableInfo
+        for (let item of tableInfo) {
+            const itemResult = []
+            // 字段名称
+            itemResult.push(item.Field)
+            
+            let [ all, type, length ] = item.Type.match(/^(\w+)\((\d+)\)$/)
+
+            // 字段类型
+            if (item.Extra) {
+                type = '主键'
+            } else if (item.type === 'varchar') {
+                type = '字符串'
+            } else {
+                type = '数值'
+            }
+
+            itemResult.push(type)
+
+            // 字段长度
+            itemResult.push(length)
+
+            // 默认值
+            itemResult.push(item.Default)
+
+            // 是否必填
+            itemResult.push(item.Null === 'NO' ? true : false)
+
+            // 是否唯一
+            itemResult.push(item.Key === 'UNI' || item.Key === 'PRI' ? true : false)
+
+            tableResult.push(itemResult)
+            
+        }
+
+        ctx.body = {
+            code: 0,
+            data: tableResult
+        }
 
     } catch(err) {
         console.error(err.message)

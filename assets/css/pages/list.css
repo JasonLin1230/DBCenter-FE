@@ -61,3 +61,26 @@
 .close-attr.hide {
     display: none;
 }
+
+/* 表格搜索框 */
+.search-box {
+    width: 240px;
+    position: absolute;
+    top: 17.5px;
+    right: 17.5px;
+}
+
+.search-box input {
+    padding-right: 30px;
+}
+
+.search-box i {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #ccc;
+}
+
+.table, .table th {
+    text-align: center;
+}

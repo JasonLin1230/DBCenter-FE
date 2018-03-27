@@ -3,7 +3,21 @@
     <%- include("../components/header.html", { withoutPriv })%>
     <!-- /header -->
 
-    Document
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+
+            <xmp id="document" theme="united" style="display:none;">
+                <%= docMD %>
+            </xmp>
+
+        </div>
+        <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
 
     <!-- Footer -->
 	<div class="footer text-center">
