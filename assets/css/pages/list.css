@@ -66,8 +66,8 @@
 .search-box {
     width: 240px;
     position: absolute;
-    top: 17.5px;
-    right: 17.5px;
+    top: 20px;
+    right: 20px;
 }
 
 .search-box input {
@@ -83,4 +83,8 @@
 
 .table, .table th {
     text-align: center;
+}
+
+.panel-heading {
+    min-height: 78px;
 }

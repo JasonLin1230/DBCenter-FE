@@ -5,6 +5,7 @@ const path = require('path')
 const static = require('koa-static')
 const bodyParser = require('koa-bodyparser')
 const session = require('koa-session-minimal')
+const cors = require('koa2-cors')
 
 const nocache = require('./middleware/nocache')
 const route = require('./routes')
@@ -21,6 +22,7 @@ render(app, {
 })
 
 app
+    .use(cors())
     .use(static(__dirname)) // 静态资源文件加载
     .use(nocache)
     .use(bodyParser()) // 解析请求体参数

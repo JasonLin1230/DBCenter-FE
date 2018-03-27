@@ -8,12 +8,7 @@ const router = new Router()
 
 // 页面
 router.get('/', async (ctx) => {
-    const withoutPriv = ctx.session.phone ? undefined : true
-
-    const docMDPath = path.join(__dirname, '../README.md')
-    const docMD = fs.readFileSync(docMDPath, 'utf8')
-
-    await ctx.render('document', { withoutPriv, docMD })
+    await ctx.render('document', { withoutPriv })
     console.log('Enter the document Page!')
 })
 

@@ -140,7 +140,7 @@ router.post('getTableInfo', async (ctx) => {
             // 字段类型
             if (item.Extra) {
                 type = '主键'
-            } else if (item.type === 'varchar') {
+            } else if (type === 'varchar') {
                 type = '字符串'
             } else {
                 type = '数值'

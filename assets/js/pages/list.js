@@ -140,7 +140,7 @@ $(function() {
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label>属性名称</label>
-                                    <input class="attrName form-control" placeholder="不区分大小写" name="name" value="${item.name}">
+                                    <input class="attrName form-control" placeholder="避免关键字冲突，请采用 表名_字段名 格式命名" name="name" value="${item.name}">
                                 </div>
 
                                 <div class="col-sm-6">
