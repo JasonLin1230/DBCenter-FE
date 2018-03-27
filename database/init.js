@@ -3,13 +3,13 @@ const db = require('./index')
 
 module.exports = async function() {
     try {
-        // 创建dataCenter数据库
-        await db('CREATE DATABASE IF NOT EXISTS dataCenter;')
-        console.log('created dataCenter database!')
+        // 创建dbcenter数据库
+        await db('CREATE DATABASE IF NOT EXISTS dbcenter;')
+        console.log('created dbcenter database!')
 
-        // 使用dataCenter数据库
-        await db('USE dataCenter')
-        console.log('used database dataCenter!')
+        // 使用dbcenter数据库
+        await db('USE dbcenter')
+        console.log('used database dbcenter!')
 
         // 创建用户表
         const createMainSQL = `
