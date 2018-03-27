@@ -18,9 +18,18 @@ module.exports = async function(ctx, next) {
         }
         
     } else {
-        ctx.body = {
-            code: 3,
-            msg: 'session失效!'
+        ctx.body = ctx.request
+
+        const pageReg = /^[/|/?]/
+
+        if (pageReg.test(ctx.request.url)) {
+            ctx.response.redirect('/login')
+        } else {
+            ctx.body = {
+                code: 3,
+                msg: 'session失效!'
+            }
         }
+        
     }
 }

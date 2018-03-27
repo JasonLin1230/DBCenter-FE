@@ -349,6 +349,8 @@ $(function() {
                 setTimeout(function() {
                     location.href = `/?tablename=${tableName}`
                 }, 1800)
+            } else if (res.code === 3) {
+                location.href = '/login'
             } else {
                 new PNotify({
                     title: '数据表创建失败！',
@@ -377,7 +379,9 @@ $(function() {
                     setTimeout(function() {
                         location.href = '/'
                     }, 1800)
-                } else {
+                } else if (res.code === 3) {
+                    location.href = '/login'
+                }  else {
                     new PNotify({
                         text: '部门删除失败！',
                         addclass: 'bg-danger'
