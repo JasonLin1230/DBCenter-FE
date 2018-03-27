@@ -9,7 +9,7 @@ module.exports = async function() {
 
         // 使用dbcenter数据库
         await db('USE dbcenter')
-        console.log('used database dbcenter!')
+        console.log('used dbcenter database!')
 
         // 创建用户表
         const createMainSQL = `
