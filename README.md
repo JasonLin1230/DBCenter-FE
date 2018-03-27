@@ -34,11 +34,11 @@ var xhr = new XMLHttpRequest();
 // 将数据插入数据表person中
 xhr.open('post',`http://127.0.0.1/api/person`);
 
-xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 // 头域中设置手机号和密码
-xhr.setRequestHeader("phone","186****8175");
-xhr.setRequestHeader("secret","123456");
+xhr.setRequestHeader("phone", "186****8175");
+xhr.setRequestHeader("secret", "123456");
 
 // 将要插入数据表中的数据
 var attrData = {
@@ -92,13 +92,13 @@ xhr.onreadystatechange = function() {
 var xhr = new XMLHttpRequest();
 
 // 将数据插入数据表person中
-xhr.open('delete',`http://127.0.0.1/api/person`);
+xhr.open('delete', `http://127.0.0.1/api/person`);
 
-xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 // 头域中设置手机号和密码
-xhr.setRequestHeader("phone","186****8175");
-xhr.setRequestHeader("secret","123456");
+xhr.setRequestHeader("phone", "186****8175");
+xhr.setRequestHeader("secret", "123456");
 
 // 将要删除的数据的ID
 xhr.send(`id=1`);
@@ -152,13 +152,13 @@ const attrData = {
 }
 
 // 将数据插入数据表Person中
-xhr.open('put',`http://127.0.0.1/api/person`);
+xhr.open('put', `http://127.0.0.1/api/person`);
 
-xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 // 头域中设置手机号和密码
-xhr.setRequestHeader("phone","186****8175");
-xhr.setRequestHeader("secret","123456");
+xhr.setRequestHeader("phone", "186****8175");
+xhr.setRequestHeader("secret", "123456");
 
 // 将要插入数据表中的数据
 xhr.send(`id=3&newAttrData=${JSON.stringify(attrData)}`);
