@@ -4,7 +4,7 @@ module.exports = async function(ctx, next) {
     const { phone, secret } = ctx.headers
 
     try {
-        await db(`USE dbcenter`)
+        const a = await db(`USE dbcenter`)
         console.log(`database dbcenter used!`)
 
         const result = await db(`SELECT * FROM USERS WHERE phone="${phone}" AND password="${secret}";`)

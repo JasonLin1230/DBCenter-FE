@@ -8,6 +8,8 @@ const router = new Router()
 
 const myCache = new NodeCache( { stdTTL: 60 } )
 
+const { msgApi } = require('../config.json')
+
 // 页面
 router.get('/', async (ctx) => {
     await ctx.render('login')
@@ -60,7 +62,7 @@ router.post('/register', async (ctx) => {
         console.log(`user ${phone} inserted`)
 
         await db(`CREATE DATABASE IF NOT EXISTS user_${phone};`)
-        console.log(`${phone} database created!`)
+        console.log(`user_${phone} database created!`)
 
         ctx.body = {
             code: 0,
@@ -97,10 +99,10 @@ router.post('/sendphonePin', async (ctx) => {
     // 短信模版
     const skin = 9015
 
-    const Authorization = `APPCODE a1a55e307eab44fe894261ac41a67dc4`
+    const Authorization = msgApi.auth
 
     try {
-        const res = await axios.get('http://smsmsgs.market.alicloudapi.com/smsmsgs', {
+        const res = await axios.get(msgApi.url, {
             params: { param, phone, skin },
             headers: { Authorization }
         })
@@ -140,9 +142,9 @@ router.post('/sendPwd', async (ctx) => {
         // 短信模版
         const skin = 9016
 
-        const Authorization = `APPCODE a1a55e307eab44fe894261ac41a67dc4`
+        const Authorization = msgApi.auth
 
-        const res = await axios.get('http://smsmsgs.market.alicloudapi.com/smsmsgs', {
+        const res = await axios.get(msgApi.url, {
             params: { param, phone, skin },
             headers: { Authorization }
         })

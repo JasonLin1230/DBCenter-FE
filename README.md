@@ -31,7 +31,7 @@
 ```
 var xhr = new XMLHttpRequest();
 
-// 将数据插入数据表person中
+// 数据表person
 xhr.open('post',`http://127.0.0.1/api/person`);
 
 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -91,7 +91,7 @@ xhr.onreadystatechange = function() {
 ```
 var xhr = new XMLHttpRequest();
 
-// 将数据插入数据表person中
+// 数据表person
 xhr.open('delete', `http://127.0.0.1/api/person`);
 
 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -151,7 +151,7 @@ const attrData = {
     person_name: '大帅哥'
 }
 
-// 将数据插入数据表Person中
+// 数据表Person
 xhr.open('put', `http://127.0.0.1/api/person`);
 
 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -198,7 +198,7 @@ xhr.onreadystatechange = function () {
 #### 请求参数(query)：
 | 名称 | 类型 | 是否必须 | 说明 |
 |:------:|:-------:|:-------------:|:-------------:|
-| condition | String | 是 | 查询条件，JSON字符串 |
+| condition | String | 否 | 查询条件，JSON字符串 |
 
 
 #### 请求示例：
@@ -209,7 +209,7 @@ const condition = {
     person_name: 'Scrat'
 }
 
-// 将数据插入数据表Person中
+// 数据表Person
 xhr.open('get',`http://127.0.0.1/api/person?condition=${JSON.stringify(condition)}`);
 
 // 头域中设置手机号和密码

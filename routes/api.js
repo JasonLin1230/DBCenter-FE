@@ -105,17 +105,22 @@ router.put('/:table', async (ctx) => {
     }
 })
 
+// 查询数据
 router.get('/:table', async (ctx) => {
     const table = ctx.params.table
 
     const condition = ctx.request.query.condition
 
-    const resCondition = Object.entries(JSON.parse(condition)).map((item) => {
-        return `${item[0]}="${item[1]}"`
-    }).join(' AND ')
+    let resCondition = ''
+
+    if (condition) {
+        resCondition = 'WHERE ' + Object.entries(JSON.parse(condition)).map((item) => {
+            return `${item[0]}="${item[1]}"`
+        }).join(' AND ')
+    }
 
     const sql = `SELECT * from ${table} 
-                    WHERE ${resCondition};`
+                    ${resCondition};`
 
     try {
         console.log('data is selecting!')
