@@ -1,5 +1,5 @@
-# dbcenter
-> 基于koa+ejs+mysql实现的数据管理系统，可以通过系统，添加数据表、数据表字段，通过相应的接口，完成对数据库增删改查的操作。  
+# DBCenter
+> 基于koa+ejs+mysql实现的数据库管理系统，可以通过系统，添加数据表、数据表字段，通过相应的接口，完成对数据库增删改查的操作。  
 
 ## 接口列表
 ---
@@ -14,25 +14,25 @@
 #### 请求参数(params)：
 | 名称 | 类型 | 是否必须 | 说明 |
 |:------:|:-------:|:-------------:|:-------------:|
-| tableName | String | 是 | 将要操作的数据表名,通过[DBCenter](#)可添加数据表 |
+| tableName | String | 是 | 将要操作的数据表名,通过[DBCenter](http://dbcenter.top)可添加数据表 |
 
 #### 请求参数(header)：
 | 名称 | 类型 | 是否必须 | 说明 |
 |:------:|:-------:|:-------------:|:-------------:|
-| phone | String | 是 | [DBCenter](http://127.0.0.1/)登陆所用到的手机号 |
-| secret | String | 是 | [DBCenter](http://127.0.0.1/)登陆所用到的密码 |
+| phone | String | 是 | [DBCenter](http://dbcenter.top)登陆所用到的手机号 |
+| secret | String | 是 | [DBCenter](http://dbcenter.top)登陆所用到的密码 |
 
 #### 请求参数(body)：
 | 名称 | 类型 | 是否必须 | 说明 |
 |:------:|:-------:|:-------------:|:-------------:|
-| attrData | Object | 是 | 将要插入的数据，请严格遵守[DBCenter](#)中所定义的数据规则 |
+| attrData | Object | 是 | 将要插入的数据，请严格遵守[DBCenter](http://dbcenter.top)中所定义的数据规则 |
 
 #### 请求示例：
 ```
 var xhr = new XMLHttpRequest();
 
 // 数据表person
-xhr.open('post',`http://127.0.0.1/api/person`);
+xhr.open('post',`http://dbcenter.top/login/api/person`);
 
 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
@@ -74,13 +74,13 @@ xhr.onreadystatechange = function() {
 #### 请求参数(params)：
 | 名称 | 类型 | 是否必须 | 说明 |
 |:------:|:-------:|:-------------:|:-------------:|
-| tableName | String | 是 | 将要操作的数据表名,通过[DBCenter](http://127.0.0.1/)可添加数据表 |
+| tableName | String | 是 | 将要操作的数据表名,通过[DBCenter](http://dbcenter.top/login/)可添加数据表 |
 
 #### 请求参数(header)：
 | 名称 | 类型 | 是否必须 | 说明 |
 |:------:|:-------:|:-------------:|:-------------:|
-| phone | String | 是 | [DBCenter](http://127.0.0.1/)登陆所用到的手机号 |
-| secret | String | 是 | [DBCenter](http://127.0.0.1/)登陆所用到的密码 |
+| phone | String | 是 | [DBCenter](http://dbcenter.top/login/)登陆所用到的手机号 |
+| secret | String | 是 | [DBCenter](http://dbcenter.top/login/)登陆所用到的密码 |
 
 #### 请求参数(body)：
 | 名称 | 类型 | 是否必须 | 说明 |
@@ -92,7 +92,7 @@ xhr.onreadystatechange = function() {
 var xhr = new XMLHttpRequest();
 
 // 数据表person
-xhr.open('delete', `http://127.0.0.1/api/person`);
+xhr.open('delete', `http://dbcenter.top/login/api/person`);
 
 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
@@ -128,13 +128,13 @@ xhr.onreadystatechange = function() {
 #### 请求参数(params)：
 | 名称 | 类型 | 是否必须 | 说明 |
 |:------:|:-------:|:-------------:|:-------------:|
-| tableName | String | 是 | 将要操作的数据表名,通过[DBCenter](http://127.0.0.1/)可添加数据表 |
+| tableName | String | 是 | 将要操作的数据表名,通过[DBCenter](http://dbcenter.top/login/)可添加数据表 |
 
 #### 请求参数(header)：
 | 名称 | 类型 | 是否必须 | 说明 |
 |:------:|:-------:|:-------------:|:-------------:|
-| phone | String | 是 | [DBCenter](http://127.0.0.1/)登陆所用到的手机号 |
-| secret | String | 是 | [DBCenter](http://127.0.0.1/)登陆所用到的密码 |
+| phone | String | 是 | [DBCenter](http://dbcenter.top/login/)登陆所用到的手机号 |
+| secret | String | 是 | [DBCenter](http://dbcenter.top/login/)登陆所用到的密码 |
 
 #### 请求参数(body)：
 | 名称 | 类型 | 是否必须 | 说明 |
@@ -152,7 +152,7 @@ var attrData = {
 }
 
 // 数据表Person
-xhr.open('put', `http://127.0.0.1/api/person`);
+xhr.open('put', `http://dbcenter.top/login/api/person`);
 
 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
@@ -188,13 +188,13 @@ xhr.onreadystatechange = function () {
 #### 请求参数(params)：
 | 名称 | 类型 | 是否必须 | 说明 |
 |:------:|:-------:|:-------------:|:-------------:|
-| tableName | String | 是 | 将要操作的数据表名,通过[DBCenter](http://127.0.0.1/)可添加数据表 |
+| tableName | String | 是 | 将要操作的数据表名,通过[DBCenter](http://dbcenter.top/login/)可添加数据表 |
 
 #### 请求参数(header)：
 | 名称 | 类型 | 是否必须 | 说明 |
 |:------:|:-------:|:-------------:|:-------------:|
-| phone | String | 是 | [DBCenter](http://127.0.0.1/)登陆所用到的手机号 |
-| secret | String | 是 | [DBCenter](http://127.0.0.1/)登陆所用到的密码 |
+| phone | String | 是 | [DBCenter](http://dbcenter.top/login/)登陆所用到的手机号 |
+| secret | String | 是 | [DBCenter](http://dbcenter.top/login/)登陆所用到的密码 |
 
 #### 请求参数(query)：
 | 名称 | 类型 | 是否必须 | 说明 |
@@ -211,7 +211,7 @@ var condition = {
 }
 
 // 数据表Person
-xhr.open('get',`http://127.0.0.1/api/person?condition=${JSON.stringify(condition)}`);
+xhr.open('get',`http://dbcenter.top/login/api/person?condition=${JSON.stringify(condition)}`);
 
 // 头域中设置手机号和密码
 xhr.setRequestHeader("phone","186****8175");
