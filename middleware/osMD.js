@@ -20,7 +20,7 @@ module.exports = async function(ctx, next) {
     } else {
         ctx.body = ctx.request
 
-        const pageReg = /^[/|/?\w+]$/
+        const pageReg = /^(\/|\/\?tablename=\w+)$/
 
         if (pageReg.test(ctx.request.url)) {
             ctx.response.redirect('/login')
