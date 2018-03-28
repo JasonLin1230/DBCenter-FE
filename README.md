@@ -145,9 +145,9 @@ xhr.onreadystatechange = function() {
 
 #### 请求示例：
 ```
-const xhr = new XMLHttpRequest();
+var xhr = new XMLHttpRequest();
     
-const attrData = {
+var attrData = {
     person_name: '大帅哥'
 }
 
@@ -160,7 +160,8 @@ xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 xhr.setRequestHeader("phone", "186****8175");
 xhr.setRequestHeader("secret", "123456");
 
-// 将要插入数据表中的数据
+// id: 修改的数据id
+// newAttrData: 新数据的值
 xhr.send(`id=3&newAttrData=${JSON.stringify(attrData)}`);
 
 xhr.onreadystatechange = function () {
@@ -203,9 +204,9 @@ xhr.onreadystatechange = function () {
 
 #### 请求示例：
 ```
-const xhr = new XMLHttpRequest();
+var xhr = new XMLHttpRequest();
     
-const condition = {
+var condition = {
     person_name: 'Scrat'
 }
 
@@ -216,7 +217,6 @@ xhr.open('get',`http://127.0.0.1/api/person?condition=${JSON.stringify(condition
 xhr.setRequestHeader("phone","186****8175");
 xhr.setRequestHeader("secret","123456");
 
-// 将要插入数据表中的数据
 xhr.send();
 
 xhr.onreadystatechange = function () {

@@ -82,7 +82,8 @@ router.put('/:table', async (ctx) => {
 
     const sql = `
         UPDATE ${table}
-            SET ${resAttrData};
+            SET ${resAttrData}
+            WHERE id=${id};
     `
 
     try {

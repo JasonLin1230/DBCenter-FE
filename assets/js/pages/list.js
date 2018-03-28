@@ -350,7 +350,14 @@ $(function() {
                     location.href = `/?tablename=${tableName}`
                 }, 1800)
             } else if (res.code === 3) {
-                location.href = '/login'
+                new PNotify({
+                    text: 'session失效,请重新登陆！',
+                    addclass: 'bg-danger'
+                })
+                
+                setTimeout(function() {
+                    location.href = '/'
+                }, 1800)
             } else {
                 new PNotify({
                     title: '数据表创建失败！',
@@ -380,7 +387,14 @@ $(function() {
                         location.href = '/'
                     }, 1800)
                 } else if (res.code === 3) {
-                    location.href = '/login'
+                    new PNotify({
+                        text: 'session失效,请重新登陆！',
+                        addclass: 'bg-danger'
+                    })
+                    
+                    setTimeout(function() {
+                        location.href = '/'
+                    }, 1800)
                 }  else {
                     new PNotify({
                         text: '部门删除失败！',
