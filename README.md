@@ -1,19 +1,57 @@
 # DBCenter
 
-> 基于koa+ejs+mysql实现的数据库管理系统，可以通过系统，添加数据表、数据表字段，通过相应的接口，完成对数据库增删改查的操作。
 
-* _DBCenter第一个版本就这样了，不打算这这个版本上继续更新小版本了。我将会马上开启2.0版本的开发._
+> 数据库操作管理系统，通过后台系统，添加数据表、数据字段。通过接口调用，完成数据库增删改查的操作。
+> 在需求简单的情况下，前端开发可以通过本系统，独立开发项目。
 
-* _我会在前端采用vue + vue-router + vuex + elementui进行开发_
 
-* _服务端还是以koa为基础框架，mysql为数据存储，如果有必要，我还会使用redis进行数据缓存，提高效率_
+预览地址：[http://dbcenter.top](http://dbcenter.top)
 
-* _在2.0版本，将会更改数据表设计，完善新建数据表数据类型，实现文件存储_
 
-## 传送门：[http://dbcenter.top](http://dbcenter.top)
+## 技术栈
+
+前端：vue + vue-router + axios
+
+后端：koa + mysql
+
+
+## 项目运行
+
+#### 源码地址:  [https://github.com/wrz199306/dbcenter](https://github.com/wrz199306/dbcenter) 
+
+#### 如何运行
+
+运行前请先安装`nodejs`
+
+`clone`项目到本地
+```
+git clone https://github.com/wrz199306/dbcenter
+```
+
+注意当前分支是否处于`develop`
+```
+git checkout develop
+```
+
+安装依赖
+```
+npm install
+```
+
+前端运行
+```
+npm run dev
+```
+
+后端运行
+
+```
+npm run server
+```
+
 
 ## 接口列表
----
+
 ### 数据插入接口
 
 #### 调用地址：/app/:tableName
@@ -242,6 +280,3 @@ xhr.onreadystatechange = function () {
 |:------:|:-------:|:-------------:|
 | code | Number | 0为正确, >0错误 |
 | data | Number | 数据列表 |
-
-
-
