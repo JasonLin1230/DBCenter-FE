@@ -6,7 +6,7 @@
         <p class="title">欢迎来到DBCenter</p>
 
         <el-form
-            @keyup="submit"
+            @keyup.enter.native="submit"
             :model="form"
             status-icon
             ref="loginForm"
@@ -37,7 +37,7 @@
 
             <el-form-item class="submit-box">
                 <!-- 登录 -->
-                <el-button @click.prevent="submit" :loading="submitLoading" type="primary">登录</el-button>
+                <el-button @click="submit" :loading="submitLoading" type="primary">登录</el-button>
             </el-form-item>
 
             <p class="desc">DBCenter是专为前端开发者提供的接口调用平台。可以本系统，添加数据表、数据表字段，通过相应的接口，完成对数据库增删改查的操作。点击查看<a href="https://github.com/wrz199306/dbcenter" target="_blank">接口文档</a></p>
@@ -124,19 +124,25 @@ export default {
         },
 
         submit() {
-            console.log(1)
+
             this.$refs.loginForm.validate(async (valid) => {
                 if (valid) {
+
+                    this.submitLoading = true
                     
                     const result = await this.$http.post('login', this.form)
 
-                    console.log(result)
+                    this.submitLoading = false
 
                     if (result.code === 1) {
+                        
                         this.valicodeErr = '验证码错误！'
-                    } else {
-                        this.$alert('success')
+                        return
                     }
+
+                    this.$store.commit('setUserInfo', result.data)
+
+                    this.$router.push('/')
 
                 }
             })
@@ -212,6 +218,6 @@ export default {
     color: #fff;
 }
 .footer a:hover {
-    color: #409EFF;
+    color: #ffd04b;
 }
 </style>

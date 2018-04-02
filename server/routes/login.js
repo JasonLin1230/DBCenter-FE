@@ -1,6 +1,8 @@
 const Router = require('koa-router')
 const axios = require('axios')
 const NodeCache = require( "node-cache" )
+const md5 = require('crypto-js/md5')
+
 
 const db = require('../mysql')
 
@@ -14,20 +16,63 @@ const { msgApi } = require('../config.json')
 router.post('/', async (ctx) => {
     const { phone, valicode } = ctx.request.body
 
-    console.log(myCache.get(`phonePin_${phone}`))
+    // if (myCache.get(`phonePin_${phone}`) != valicode) {
+         
+    //     ctx.body = {
+    //         code: 1,
+    //         messsage: '验证码错误！'
+    //     }
 
-    if (myCache.get(`phonePin_${phone}`) != valicode) {
-        ctx.body = {
-            code: 1,
-            msg: '验证码错误！'
+    //     return
+    // }
+
+    try {
+
+        await db(`CREATE DATABASE IF NOT EXISTS user_${phone}`)
+        console.log(`create user_${phone} database successed`)
+
+        await db(`USE user_${phone}`)
+        console.log(`use user_${phone} database succesed`)
+
+        const createUserTableSql = `
+            CREATE TABLE IF NOT EXISTS user (
+                phone CHAR(11) NOT NULL UNIQUE,
+                secret CHAR(32) NOT NULL
+            )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        `
+        await db(createUserTableSql)
+        console.log(`create user table succesed`)
+
+        const userData = await db(`SELECT * FROM user`)
+        
+        let secret = ''
+        
+        if (userData.length) {
+
+            secret = userData[0].secret
+
+        } else {
+
+            const msg = `${phone}|${new Date().getTime()}`
+
+            secret = md5(msg).toString()
+
+            const inserUserSql = `
+                INSERT INTO user (phone, secret)
+                    VALUES
+                        ("${phone}", "${secret}")
+            `
+            await db(inserUserSql)
+            console.log(`inser userData successed`)
         }
 
-        return
-    }
+        ctx.body = {
+            code: 0,
+            data: { phone, secret }
+        }
 
-    ctx.body = {
-        code: 0,
-        msg: 'success'
+    } catch(err) {
+        throw Error(err.message)
     }
 })
 
@@ -54,22 +99,15 @@ router.post('/sendValiCode', async (ctx) => {
         const { Code, Message } = res.data
 
         if (Code === 'OK') {
-            ctx.body = { code: 0, msg: Message }
+            ctx.body = { code: 0, messsage: Message }
         } else {
-            ctx.body = { code: 1, msg: Message }
+            ctx.body = { code: 1, messsage: Message }
         }
 
     } catch(err) {
-        ctx.body = { code: 2, msg: err.message }
-        console.error(`注册短信验证码,Message: ${err.message}`)
+        throw Error(err.message)
     }
 })
-
-// 退出登录
-// router.get('/layout', async (ctx) => {
-//     ctx.session = {}
-//     ctx.response.redirect('/login')
-// })
 
 
 module.exports = router

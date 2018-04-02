@@ -11,8 +11,12 @@ export default {
 </script>
 
 <style>
+html, body {
+	height: 100%;
+	overflow: hidden;
+}
 /*css初始样式*/
-body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select {
     margin: 0;
     padding: 0;
 }
@@ -22,6 +26,14 @@ body,textarea,select,button {
 }
 ul,li {
 	list-style: none;
+}
+
+a {
+    color: #409eff;
+	transition: color .2s;
+}
+a:hover {
+    color: #66b1ff;
 }
 </style>
 
