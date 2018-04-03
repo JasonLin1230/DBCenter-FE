@@ -38,16 +38,11 @@
         </ul>
     </el-header>
 
-    <el-scrollbar 
-        class="main-wrapper">
-        
-        <el-main>
-            <transition :name="transitionName">
-                <router-view class="main"></router-view>
-            </transition>
-        </el-main>
-
-    </el-scrollbar>
+    <el-main class="main">
+        <transition :name="transitionName">
+            <router-view class="trans"></router-view>
+        </transition>
+    </el-main>
 </div>
 </template>
 
@@ -140,16 +135,16 @@ export default {
     cursor: pointer;
 }
 
-
-.main-wrapper {
+.main {
     position: absolute;
-    top: 60px;
-    left: 0;
-    right: 0;
-    bottom: -17px;
+    top: 80px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    overflow: hidden;
 }
 
-.main {
+.trans {
     transition: all .1s;
 }
 

@@ -43,16 +43,18 @@ router.post('/', async (ctx) => {
 
         let type = getAttrType(attr.type)
 
-        let notNull = attr.notNull === 'true' ? 'NOT NULL' : ''
+        let notNull = attr.notNull ? 'NOT NULL' : ''
 
-        let unique = attr.unique === 'true' && attr.unique === 'true' ? 'UNIQUE' : ''
+        let unique = attr.unique ? 'UNIQUE' : ''
 
-        let attrDefault = (attr.default && attr.type === 'string') ? `"${attr.default}"` : attr.default
+        let attrDefault = ''
+        if (attr.default) {
+            attrDefault = attr.type === 'string' ? `default "${attr.default}"` : `default ${attr.default}`
+        }
 
         let symbol = i === attrs.length - 1 ? ')' : ','
 
         attrSql += `${name} ${type} ${notNull} ${unique} ${attrDefault} ${symbol}`
-
     }
 
     const sql = `CREATE TABLE ${tableName} ${attrSql} ENGINE=InnoDB DEFAULT CHARSET=utf8;`
@@ -74,7 +76,7 @@ function getAttrType(type) {
             return 'FLOAT(32, 5)'
         
         case 'file':
-            return  'TINYTEXT(255)'
+            return  'TEXT(128)'
     }
 }
 
@@ -96,6 +98,40 @@ router.delete('/:tableName', async (ctx) => {
         message: 'success!'
     }
 
+})
+
+// 获取数据表详细信息
+router.get('/desc/:tableName', async (ctx) => {
+    const tableName = ctx.params.tableName
+
+    let result = await db(`desc ${tableName}`)
+
+    result = result.map((item) => {
+        let type = item.Type.split('(')[0]
+
+        if (item.Key === 'PRI') {
+            type = 'id'
+        } else if (type === 'text') {
+            type = 'file'
+        } else if (type === 'int') {
+            type = 'Number'
+        } else if (type === 'varchar') {
+            type = 'String'
+        }
+
+        return {
+            name: item.Field,
+            type: type,
+            default: item.Default,
+            notNull: item.Null === 'NO',
+            unique: item.Key === 'UNI' || item.Key === 'PRI'
+        }
+    })
+
+    ctx.body = {
+        code: 0,
+        data: result
+    }
 })
 
 

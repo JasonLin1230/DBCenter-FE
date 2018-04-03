@@ -205,7 +205,7 @@ export default {
 
                 this.addTableVisible = false
 
-                this.$emit('reload')
+                this.$emit('reload', result.tableName)
 
                 this.formData = { tableName: '' }
 
