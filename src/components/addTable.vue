@@ -35,7 +35,7 @@
 
                     <div class="group">
                         <el-checkbox v-model="attr.notNull" label="是否必填" name="type"></el-checkbox>
-                        <el-checkbox v-model="attr.unique" v-show="attr.notNull" label="是否唯一" name="type"></el-checkbox>
+                        <el-checkbox v-model="attr.unique" v-show="attr.notNull && attr.type !== 'file'" label="是否唯一" name="type"></el-checkbox>
 
                         <el-button class="attr-btn" type="text" v-show="attrs.length - 1 === index" @click="addAttr">添加属性</el-button>
                         <el-button class="attr-btn" type="text" v-show="attrs.length > 1" @click="removeAttr(index)">删除属性</el-button>
@@ -162,7 +162,6 @@ export default {
         },
 
         async onsubmit() {
-            
             if (!(this.validate())) return
 
             const result = {}

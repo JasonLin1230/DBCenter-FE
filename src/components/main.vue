@@ -82,7 +82,7 @@
  
         </el-scrollbar>
         
-        <addTable ref="addTable" @reload="loadTables" />
+        <addTable ref="addTable" @reload="reloadTables" />
     </div>
 </template>
 
@@ -99,7 +99,7 @@ export default {
     },
 
     methods: {
-        async loadTables(tableName) {
+        async reloadTables(tableName) {
             const res = await this.$http.get('/table')
 
             this.tableList = res.data
@@ -107,12 +107,18 @@ export default {
             this.$router.push({ path: '/', query: { tableName } })
         },
 
+        async loadTables() {
+            const res = await this.$http.get('/table')
+
+            this.tableList = res.data
+
+        },
+
         addTable() {
             this.$refs.addTable.addTableVisible = true
         },
 
         delTable(table) {
-            this.$alert(table)
             this.$confirm(`您确认要删除数据表${table}吗？`, '提示').then(async () => {
                 
                 const res = await this.$http.delete(`table/${table}`)
@@ -125,7 +131,7 @@ export default {
                         duration: 2000
                     })
 
-                    this.loadTables()
+                    this.reloadTables()
                 }
 
             }).catch(() => {})
@@ -139,22 +145,29 @@ export default {
     components: { addTable },
 
     watch: {
-        async targetTable(table) {
-            if (!table) return
+        targetTable: {
+            handler: async function(table) {
+                if (table) {
 
-            const desc = await this.$http.get(`table/desc/${table}`)
-            
-            if (desc.code === 0) {
+                    const desc = await this.$http.get(`table/desc/${table}`)
+                    
+                    if (desc.code === 0) {
 
-                this.tableDesc = desc.data
+                        this.tableDesc = desc.data
 
-            } else {
-                this.$notify({
-                    type: 'warning',
-                    message: '列表数据请求失败',
-                    duration: 2000
-                })
-            }
+                    } else {
+                        this.$notify({
+                            type: 'warning',
+                            message: '列表数据请求失败',
+                            duration: 2000
+                        })
+                    }
+
+                } else {
+                    this.tableDesc = []
+                }
+            },
+            immediate: true
         }
     },
 

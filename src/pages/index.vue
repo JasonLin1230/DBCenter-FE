@@ -5,23 +5,9 @@
             <img src="../assets/images/header/logo.png" alt="logo">
         </router-link>
 
-        <el-menu
-            class="menu"
-            :default-active="targetPath"
-            mode="horizontal"
-            :router="true"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b">
-
-            <el-menu-item index="/">数据定义</el-menu-item>
-
-            <el-menu-item index="/document">接口文档</el-menu-item>            
-        </el-menu>
-
         <ul class="tools">
             <li>
-                <a class="topic" href="https://github.com/wrz199306/dbcenter" target="_blank">Github</a>
+                <a class="topic" href="https://github.com/wrz199306/dbcenter" target="_blank">接口文档</a>
             </li>
 
             <li>
@@ -39,14 +25,17 @@
     </el-header>
 
     <el-main class="main">
-        <transition :name="transitionName">
+        <!-- <transition :name="transitionName">
             <router-view class="trans"></router-view>
-        </transition>
+        </transition> -->
+        <main-content></main-content>
     </el-main>
 </div>
 </template>
 
 <script>
+import mainContent from '../components/main'
+
 export default {
     data() {
         return {
@@ -74,6 +63,10 @@ export default {
                 this.$router.push('/login')
 
             }
+        },
+
+        selectMenu(index) {
+            this.targetPath = '/'
         }
     },
 
@@ -94,7 +87,9 @@ export default {
             },
             immediate: true
         }
-    }
+    },
+
+    components: { mainContent }
 }
 </script>
 

@@ -5,7 +5,7 @@
   "author": "wangruozheng <wangruozheng@zhizhangyi.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "client": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "build": "node build/build.js",
     "server": "node server/app.js"
   },
@@ -73,7 +73,7 @@
     "webpack-merge": "^4.1.0"
   },
   "engines": {
-    "node": ">= 6.0.0",
+    "node": ">= 7.6.0",
     "npm": ">= 3.0.0"
   },
   "browserslist": [

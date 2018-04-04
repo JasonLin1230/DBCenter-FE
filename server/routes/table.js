@@ -113,16 +113,21 @@ router.get('/desc/:tableName', async (ctx) => {
             type = 'id'
         } else if (type === 'text') {
             type = 'file'
-        } else if (type === 'int') {
+        } else if (type === 'float') {
             type = 'Number'
         } else if (type === 'varchar') {
             type = 'String'
         }
 
+        let def = item.Default
+
+        if (type === 'Number') def = parseFloat(item.Default)
+
+
         return {
             name: item.Field,
             type: type,
-            default: item.Default,
+            default: def,
             notNull: item.Null === 'NO',
             unique: item.Key === 'UNI' || item.Key === 'PRI'
         }
