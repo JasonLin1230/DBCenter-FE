@@ -33,7 +33,7 @@ git clone https://github.com/wrz199306/dbcenter
 git checkout develop
 ```
 
-安装依赖1
+安装依赖
 ```
 npm install
 ```
