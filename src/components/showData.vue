@@ -21,7 +21,7 @@
             :property="item"
             :label="item"></el-table-column>
 
-        <el-table-column label="操作">
+        <el-table-column label="操作" width="150px">
             <template slot-scope="scope">
                 <el-button
                     size="mini"

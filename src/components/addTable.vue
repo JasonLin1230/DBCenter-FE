@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="添加数据表" width="800px" :visible.sync="addTableVisible">
+    <el-dialog title="添加数据表" width="850px" :visible.sync="addTableVisible">
         <el-form ref="form" :model="formData" :rules="rules" label-width="100px" size="small">
 
             <el-form-item label="数据表名" prop="tableName">

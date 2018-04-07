@@ -32,11 +32,13 @@ npm run client
 
 后端运行
 
+> - 进入/server/config.json,完善mysql配置
+> - 系统登陆手机验证码验证代码已被注释，可输入任意验证码登陆系统，代码位置/server/routes/login.js:19
+
 ```
 npm run server
 ```
 
-> 系统登陆手机验证码验证代码已被注释，可输入任意验证码登陆系统，代码位置/server/routes/login.js:19
 
 ## 技术栈
 

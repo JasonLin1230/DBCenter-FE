@@ -17,7 +17,6 @@
                 v-if="item.name !== 'id'"
                 :key="key"
                 :label="item.name">
-                {{formData[item.name]}}
                 <el-input v-if="item.type === 'String'" v-model="formData[item.name]"></el-input>
 
                 <el-input-number v-else size="mini" :step="1" v-model="formData[item.name]"></el-input-number>
