@@ -36,9 +36,7 @@ import mainContent from '../components/main'
 export default {
     data() {
         return {
-            targetPath: '/',
-
-            transitionName: ''
+            targetPath: '/'
         }
     },
 
@@ -67,23 +65,17 @@ export default {
         }
     },
 
-    watch: {
-        "$route": {
-            handler(to, from) {
-                if (!(this.userInfo.phone)) this.$router.push('/login')
+    beforeRouteEnter (to, from, next) {
 
-                this.targetPath = to.path
+        const { userInfo } = JSON.parse(localStorage.vuex)
+        const {phone, secret} = userInfo
 
-                if (from) {
-                    const pathArr = ['/', '/document']
-                    const toIndex = pathArr.indexOf(to.path)
-                    const fromIndex = pathArr.indexOf(from.path)
-                    this.transitionName = toIndex < fromIndex ? 'slide-right' : 'slide-left'
-                }
-                
-            },
-            immediate: true
+        if (phone || secret) {
+            next()
+        } else {
+            next('/login')
         }
+        
     },
 
     components: { mainContent }

@@ -5,8 +5,6 @@ module.exports = async (ctx, next) => {
     try {
         const { phone, secret } = ctx.headers
 
-        console.log(phone, secret)
-
         console.log('Auth start')
 
         await db(`USE user_${phone};`)

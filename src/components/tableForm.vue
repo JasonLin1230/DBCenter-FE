@@ -85,13 +85,15 @@ export default {
     watch: {
         visible(val) {
             if (val) {
+                this.formData = {}
+
                 for (let item of this.tableDesc) {
-                    this.formData[item.name] = item.default
+                    this.$set(this.formData, item.name, item.default)
                 }
                 
                 if (this.targetData) {
                     for (let key in this.targetData) {
-                        this.formData[key] = this.targetData[key]
+                        this.$set(this.formData, key, this.targetData[key])                        
                     }
                 }
 
