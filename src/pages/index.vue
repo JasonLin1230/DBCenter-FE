@@ -25,9 +25,6 @@
     </el-header>
 
     <el-main class="main">
-        <!-- <transition :name="transitionName">
-            <router-view class="trans"></router-view>
-        </transition> -->
         <main-content></main-content>
     </el-main>
 </div>

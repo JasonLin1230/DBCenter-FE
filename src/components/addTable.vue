@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="添加数据表" :visible.sync="addTableVisible">
+    <el-dialog title="添加数据表" width="800px" :visible.sync="addTableVisible">
         <el-form ref="form" :model="formData" :rules="rules" label-width="100px" size="small">
 
             <el-form-item label="数据表名" prop="tableName">
@@ -16,8 +16,7 @@
                     <el-form-item label="属性类型">
                         <el-select class="attrInt" v-model="attr.type" placeholder="请选择">
                             <el-option value="string" label="字符串"></el-option>
-                            <el-option value="number" label="数值"></el-option>
-                            <el-option value="file" label="文件"></el-option>                            
+                            <el-option value="number" label="数值"></el-option>                         
                         </el-select>
                     </el-form-item>
                 </div>
@@ -29,13 +28,11 @@
 
                         <el-input-number v-else-if="attr.type === 'number'" v-model="attr.numDefault"></el-input-number>
 
-                        <p class="file-default" v-else>文件类型属性不允许设置默认值</p>
-
                     </el-form-item>
 
                     <div class="group">
                         <el-checkbox v-model="attr.notNull" label="是否必填" name="type"></el-checkbox>
-                        <el-checkbox v-model="attr.unique" v-show="attr.notNull && attr.type !== 'file'" label="是否唯一" name="type"></el-checkbox>
+                        <el-checkbox v-model="attr.unique" v-show="attr.notNull" label="是否唯一" name="type"></el-checkbox>
 
                         <el-button class="attr-btn" type="text" v-show="attrs.length - 1 === index" @click="addAttr">添加属性</el-button>
                         <el-button class="attr-btn" type="text" v-show="attrs.length > 1" @click="removeAttr(index)">删除属性</el-button>
@@ -219,6 +216,13 @@ export default {
                     })
                 })
 
+            } else {
+                this.$notify({
+                    type: 'error',
+                    title: '数据表创建失败',
+                    message: res,message,
+                    duration: 2000
+                })
             }
             
         },
@@ -277,10 +281,5 @@ export default {
     padding: 0;
     margin-left: 30px;
     line-height: 32px;
-}
-
-.file-default {
-    padding: 0 15px;
-    color: #aaa;
 }
 </style>

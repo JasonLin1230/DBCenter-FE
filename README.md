@@ -121,7 +121,7 @@ xhr.onreadystatechange = function() {
 ---
 ### 数据删除接口
 
-#### 调用地址：/app/:tableName
+#### 调用地址：/data/:tableName
 
 #### 请求方式：DELETE
 
@@ -170,7 +170,7 @@ xhr.onreadystatechange = function() {
 ---
 ### 数据更新接口
 
-#### 调用地址：/app/:tableName
+#### 调用地址：/data/:tableName
 
 #### 请求方式：PUT
 
@@ -224,7 +224,7 @@ xhr.onreadystatechange = function () {
 ---
 ### 数据查询接口
 
-#### 调用地址：/app/:tableName
+#### 调用地址：/data/:tableName
 
 #### 请求方式：GET
 

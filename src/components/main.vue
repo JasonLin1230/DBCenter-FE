@@ -5,15 +5,24 @@
             <el-menu
                 :default-active="targetTable"
                 class="table-menu"
-                @select="selectTable">
+                @select="selectTable"
+                v-loading="tableListLoading">
 
                 <el-menu-item-group>
-                    <template slot="title">数据表</template>
+                    <template slot="title">
+                        数据表
+                    </template>
 
                     <div v-if="tableList.length" class="table-list">
-                        <el-button type="primary" class="add-table" @click="addTable">添加数据表</el-button>
+                        <el-button 
+                            type="primary" 
+                            class="add-table" 
+                            @click="addTable">添加数据表</el-button>
 
-                        <el-menu-item v-for="table in tableList" :key="table" :index="table">
+                        <el-menu-item 
+                            v-for="table in tableList" 
+                            :key="table" 
+                            :index="table">
                             <span>{{ table }}</span> 
                             <i class="el-icon-close" @click.stop="delTable(table)"></i>
                         </el-menu-item>
@@ -32,12 +41,20 @@
             class="main-wrapper">
 
             <div class="main">
+                <div class="main-header">
+                    {{ targetTable || '暂无数据表' }}
 
-                <div class="main-header">{{ targetTable || '暂无数据表' }}</div>
+                    <el-button 
+                        v-show="targetTable" 
+                        type="text" 
+                        @click="setShowDataTarget" 
+                        class="show-data-btn">查看该表下所有数据</el-button>                    
+                </div>
 
                 <el-table
                     class="desc-table"
-                    :data="tableDesc">
+                    :data="tableDesc"
+                    v-loading="tableDesLoading">
                     <el-table-column
                         type="index">
                     </el-table-column>
@@ -79,39 +96,40 @@
                 </el-table>
 
             </div>
+
+            <showData 
+                class="show-data"
+                :class="showDataClass" 
+                ref="showData"
+                @returnTalbe="showDataClass = ''" />
  
         </el-scrollbar>
         
         <addTable ref="addTable" @reload="reloadTables" />
+
     </div>
 </template>
 
 <script>
 import addTable from '@/components/addTable'
+import showData from '@/components/showData'
 
 export default {
     data() {
         return {
             tableList: [],
 
-            tableDesc: []
+            showDataClass: '',
+
+            tableListLoading: false,
+
+            tableDesLoading: false
         }
     },
 
     methods: {
-        async reloadTables(tableName) {
-            const res = await this.$http.get('/table')
-
-            this.tableList = res.data
-
+        reloadTables(tableName) {
             this.$router.push({ path: '/', query: { tableName } })
-        },
-
-        async loadTables() {
-            const res = await this.$http.get('/table')
-
-            this.tableList = res.data
-
         },
 
         addTable() {
@@ -131,7 +149,17 @@ export default {
                         duration: 2000
                     })
 
-                    this.reloadTables()
+                    this.$router.push({
+                        path: '/',
+                        query: { _: new Date().getTime() }
+                    })
+                } else {
+                    this.$notify({
+                        type: 'error',
+                        title: '数据表删除失败',
+                        message: res,message,
+                        duration: 2000
+                    })
                 }
 
             }).catch(() => {})
@@ -139,46 +167,53 @@ export default {
 
         selectTable(index) {
             this.$router.push({ path: '/', query: { tableName: index } })
+        },
+
+        setShowDataTarget() {
+            this.showDataClass = 'active'
         }
     },
 
-    components: { addTable },
+    components: { addTable, showData },
 
     watch: {
-        targetTable: {
-            handler: async function(table) {
-                if (table) {
+        $route: {
+            handler: async function(route) {
 
-                    const desc = await this.$http.get(`table/desc/${table}`)
-                    
-                    if (desc.code === 0) {
+                this.tableListLoading = true
 
-                        this.tableDesc = desc.data
+                const res = await this.$http.get('/table')
 
-                    } else {
-                        this.$notify({
-                            type: 'warning',
-                            message: '列表数据请求失败',
-                            duration: 2000
-                        })
-                    }
+                const tables = res.data
 
-                } else {
-                    this.tableDesc = []
-                }
-            },
+                this.tableList = tables
+
+                const targetTable = route.query.tableName || tables[0]
+
+                this.$store.commit('setTargetTable', targetTable)
+
+                this.tableListLoading = false
+
+                this.tableDesLoading = true
+                this.$store.dispatch('setTableDesc').then(() => {
+                    this.tableDesLoading = false
+                })
+
+                this.$refs.showData.setTableData()
+
+            },            
             immediate: true
         }
     },
 
     computed: {
         targetTable() {
-            return this.$route.query.tableName || this.tableList[0]
-        }
-    },
+            return this.$store.state.targetTable
+        },
 
-    created() {
-        this.loadTables()
+        tableDesc() {
+            return this.$store.state.tableDesc
+        }
     }
 }
 </script>
@@ -248,15 +283,34 @@ export default {
 .main-header {
     border-bottom: 1px dotted #e1e6eb;
     overflow: hidden;
-    line-height: 40px;
+    line-height: 50px;
     padding: 0 14px;
-    height: 40px;
+    height: 50px;
     font-size: 14px;
     font-weight: 600;
     color: #333;
 }
 .desc-table {
     padding-top: 10px;
+}
+.show-data-btn {
+    font-size: 11px;
+    line-height: 24px;
+    float: right;
+}
+.show-data {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    bottom: 0px;
+    left: 20px;
+    background: #fff;
+    z-index: 10;
+    transform: translateX(105%);
+    transition: transform .3s;
+}
+.show-data.active {
+    transform: translateX(0);
 }
 </style>
 
