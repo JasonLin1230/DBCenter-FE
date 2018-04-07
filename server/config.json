@@ -4,10 +4,10 @@
         "host": "127.0.0.1",
         "port": "3306",
         "user": "root",
-        "password": "ruozheng2016"
+        "password": "********"
     },
     "msgApi": {
-        "url": "http://smsmsgs.market.alicloudapi.com/smsmsgs",
-        "auth": "APPCODE a1a55e307eab44fe894261ac41a67dc4"
+        "url": "***********",
+        "auth": "*************"
     }
 }
