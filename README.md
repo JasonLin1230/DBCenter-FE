@@ -42,7 +42,7 @@ npm run server
 
 ## 技术栈
 
-前端：vue + vue-router + vuex + axios
+前端：vue + vue-router + vuex + axios + ElementUI
 
 后端：koa + mysql
 
@@ -160,7 +160,7 @@ xhr.onreadystatechange = function() {
         console.log(xhr.responseText);
     }
 }
-}
+
 ```
 
 #### 正常返回示例：
