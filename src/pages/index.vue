@@ -67,8 +67,8 @@ export default {
 
     beforeRouteEnter (to, from, next) {
 
-        const { userInfo } = JSON.parse(localStorage.vuex)
-        const {phone, secret} = userInfo
+        const { userInfo } = localStorage.vuex ? JSON.parse(localStorage.vuex) : {}
+        const { phone, secret } = userInfo || {}
 
         if (phone || secret) {
             next()
