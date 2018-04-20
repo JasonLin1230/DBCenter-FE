@@ -42,7 +42,7 @@ export default {
 
     computed: {
         userInfo() {
-            return this.$store.state.userInfo
+            return this.$store.state.userInfo;
         }
     },
 
@@ -50,30 +50,30 @@ export default {
         handleAccount(type) {
             if (type === 'getSecret') {
 
-                this.$alert(this.userInfo.secret, 'secret')
+                this.$alert(this.userInfo.secret, 'secret');
 
             } else if (type === 'logout') {
 
-                this.$store.commit('setUserInfo', {})
-                this.$router.push('/login')
+                this.$store.commit('setUserInfo', {});
+                this.$router.push('/login');
 
             }
         },
 
         selectMenu(index) {
-            this.targetPath = '/'
+            this.targetPath = '/';
         }
     },
 
     beforeRouteEnter (to, from, next) {
 
-        const { userInfo } = localStorage.vuex ? JSON.parse(localStorage.vuex) : {}
-        const { phone, secret } = userInfo || {}
+        const { userInfo } = localStorage.vuex ? JSON.parse(localStorage.vuex) : {};
+        const { phone, secret } = userInfo || {};
 
         if (phone || secret) {
-            next()
+            next();
         } else {
-            next('/login')
+            next('/login');
         }
         
     },
