@@ -1,15 +1,15 @@
-import axios from 'axios'
+import axios from 'axios';
 
-axios.defaults.baseURL = 'http://127.0.0.1:8888'
+axios.defaults.baseURL = 'http://127.0.0.1:8888';
 
 // 请求拦截器
 axios.interceptors.request.use((req) => {
     
-    const { phone, secret} = window.vm.$store.state.userInfo
-    req.headers.phone = phone
-    req.headers.secret = secret
+    const { phone, secret} = window.vm.$store.state.userInfo;
+    req.headers.phone = phone;
+    req.headers.secret = secret;
 
-    return req
+    return req;
 
 }, (err) => {
     return Promise.reject(err);
@@ -23,15 +23,15 @@ axios.interceptors.response.use((res) => {
             type: 'warning',
             message: '用户信息异常，请重新登陆',
             duration: 2000
-        })
-        window.vm.$store.commit('setUserInfo', {})
+        });
+        window.vm.$store.commit('setUserInfo', {});
 
         setTimeout(() => {
-            window.location.href = '/#/login'
+            window.location.href = '/#/login';
         }, 2000)
     }
 
-    return res.data
+    return res.data;
 
 }, (err) => {
     
@@ -40,7 +40,7 @@ axios.interceptors.response.use((res) => {
         message: err.message
     })
 
-    throw new Error(err)
+    throw new Error(err);
 })
 
 export default axios
