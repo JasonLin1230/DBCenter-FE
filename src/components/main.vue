@@ -129,17 +129,17 @@ export default {
 
     methods: {
         reloadTables(tableName) {
-            this.$router.push({ path: '/', query: { tableName } })
+            this.$router.push({ path: '/', query: { tableName } });
         },
 
         addTable() {
-            this.$refs.addTable.addTableVisible = true
+            this.$refs.addTable.addTableVisible = true;
         },
 
         delTable(table) {
             this.$confirm(`您确认要删除数据表${table}吗？`, '提示').then(async () => {
                 
-                const res = await this.$http.delete(`table/${table}`)
+                const res = await this.$http.delete(`table/${table}`);
 
                 if (res.code === 0) {
                     
@@ -147,30 +147,30 @@ export default {
                         type: 'success',
                         message: '数据表删除成功',
                         duration: 2000
-                    })
+                    });
 
                     this.$router.push({
                         path: '/',
                         query: { _: new Date().getTime() }
-                    })
+                    });
                 } else {
                     this.$notify({
                         type: 'error',
                         title: '数据表删除失败',
                         message: res,message,
                         duration: 2000
-                    })
+                    });
                 }
 
             }).catch(() => {})
         },
 
         selectTable(index) {
-            this.$router.push({ path: '/', query: { tableName: index } })
+            this.$router.push({ path: '/', query: { tableName: index } });
         },
 
         setShowDataTarget() {
-            this.showDataClass = 'active'
+            this.showDataClass = 'active';
         }
     },
 
@@ -180,28 +180,28 @@ export default {
         $route: {
             handler: async function(route) {
 
-                this.tableListLoading = true
+                this.tableListLoading = true;
 
-                const res = await this.$http.get('/table')
+                const res = await this.$http.get('/table');
 
-                const tables = res.data
+                const tables = res.data;
 
-                this.tableList = tables
+                this.tableList = tables;
 
-                const targetTable = route.query.tableName || tables[0]
+                const targetTable = route.query.tableName || tables[0];
 
-                this.$store.commit('setTargetTable', targetTable)
+                this.$store.commit('setTargetTable', targetTable);
 
-                this.tableListLoading = false
+                this.tableListLoading = false;
 
-                this.tableDesLoading = true
+                this.tableDesLoading = true;
                 this.$store.dispatch('setTableDesc').then(() => {
-                    this.tableDesLoading = false
+                    this.tableDesLoading = false;
                 })
 
-                this.showDataClass = ''
+                // this.showDataClass = '';
 
-                this.$refs.showData.setTableData()
+                // this.$refs.showData.setTableData();
 
             },            
             immediate: true
@@ -210,11 +210,11 @@ export default {
 
     computed: {
         targetTable() {
-            return this.$store.state.targetTable
+            return this.$store.state.targetTable;
         },
 
         tableDesc() {
-            return this.$store.state.tableDesc
+            return this.$store.state.tableDesc;
         }
     }
 }
