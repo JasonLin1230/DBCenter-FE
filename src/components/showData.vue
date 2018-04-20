@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import tableForm from './tableForm'
+import tableForm from './tableForm';
 
 export default {
 
@@ -63,45 +63,45 @@ export default {
 
     methods: {
         returnTalbe() {
-            this.$emit('returnTalbe')
+            this.$emit('returnTalbe');
         },
 
         setTableData() {
-            this.loading = true
+            this.loading = true;
             this.$store.dispatch('setTableData').then(() => {
-                this.loading = false
+                this.loading = false;
             })
         },
 
         inserData() {
-            this.targetData = null
-            this.$refs.form.visible = true
+            this.targetData = null;
+            this.$refs.form.visible = true;
         },
 
         updateData(data) {
-            this.targetData = data
-            this.$refs.form.visible = true
+            this.targetData = data;
+            this.$refs.form.visible = true;
         },
 
         delData(id) {
             this.$confirm(`您确认要删除这条数据吗？`, '提示').then(async () => {
-                const res = await this.$http.delete(`/data/${this.targetTable}`, { data: { id } })
+                const res = await this.$http.delete(`/data/${this.targetTable}`, { data: { id } });
             
                 if (res.code === 0) {
                     this.$notify({
                         type: 'success',
                         message: '数据删除成功',
                         duration: 2000
-                    })
+                    });
 
-                    this.setTableData()
+                    this.setTableData();
                 } else {
                     this.$notify({
                         type: 'error',
                         title: '数据删除失败',
                         message: res,message,
                         duration: 2000
-                    })
+                    });
                 }
             })
         }
@@ -110,7 +110,7 @@ export default {
     computed: {
         tableKeys () {
             return this.tableDesc.map((item) => {
-                return item.name
+                return item.name;
             })
         },
 
