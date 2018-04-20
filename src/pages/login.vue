@@ -57,18 +57,18 @@ export default {
 
             if (value === '') {
 
-                this.getMsgDisabled = true
-                callback(new Error('请输入手机号'))
+                this.getMsgDisabled = true;
+                callback(new Error('请输入手机号'));
 
             } else if (!(/^[1][3,4,5,7,8][0-9]{9}$/.test(value))) {
 
-                this.getMsgDisabled = true                
-                callback(new Error('请输入正确的手机号'))
+                this.getMsgDisabled = true;       
+                callback(new Error('请输入正确的手机号'));
 
             } else {
 
-                this.getMsgDisabled = false                
-                callback()
+                this.getMsgDisabled = false;           
+                callback();
 
             }
         }
@@ -96,25 +96,25 @@ export default {
 
     methods: {
         async sendMsg() {
-            this.getMsgDisabled = true
+            this.getMsgDisabled = true;
 
-            let s = 60
+            let s = 60;
 
-            this.sendMsgBtnTxt = s
+            this.sendMsgBtnTxt = s;
 
             const timer = setInterval(() => {
                 if (s === 0) {
-                    clearInterval(timer)
-                    this.sendMsgBtnTxt = '发送验证码'
+                    clearInterval(timer);
+                    this.sendMsgBtnTxt = '发送验证码';
                 } else {
-                    s--
-                    this.sendMsgBtnTxt = s
+                    s--;
+                    this.sendMsgBtnTxt = s;
                 }
             }, 1000)
 
-            const phone = this.form.phone
+            const phone = this.form.phone;
 
-            const result = await this.$http.post('login/sendValiCode', { phone })
+            const result = await this.$http.post('login/sendValiCode', { phone });
 
             if (result.code === 1) {
                 this.$notify.error({
@@ -128,21 +128,21 @@ export default {
             this.$refs.loginForm.validate(async (valid) => {
                 if (valid) {
 
-                    this.submitLoading = true
+                    this.submitLoading = true;
                     
-                    const result = await this.$http.post('login', this.form)
+                    const result = await this.$http.post('login', this.form);
 
-                    this.submitLoading = false
+                    this.submitLoading = false;
 
                     if (result.code === 1) {
                         
-                        this.valicodeErr = '验证码错误！'
-                        return
+                        this.valicodeErr = '验证码错误！';
+                        return;
                     }
 
-                    this.$store.commit('setUserInfo', result.data)
+                    this.$store.commit('setUserInfo', result.data);
 
-                    this.$router.push('/')
+                    this.$router.push('/');
 
                 }
             })
