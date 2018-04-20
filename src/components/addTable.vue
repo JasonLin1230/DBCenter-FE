@@ -1,12 +1,29 @@
 <template>
-    <el-dialog title="添加数据表" width="850px" :visible.sync="addTableVisible">
-        <el-form ref="form" :model="formData" :rules="rules" label-width="100px" size="small">
+    <el-dialog
+        title="添加数据表"
+        width="850px"
+        :visible.sync="addTableVisible">
+
+        <el-form
+            ref="form"
+            :model="formData"
+            :rules="rules"
+            label-width="100px"
+            size="small">
 
             <el-form-item label="数据表名" prop="tableName">
                 <el-input v-model="formData.tableName" placeholder="字母、下划线开头,字母、数字、下划线组成"></el-input>
             </el-form-item>
 
-            <el-form v-for="(attr, index) in attrs" ref="attrs" :model="attr" class="attr" :rules="attrRules" label-width="100px" size="small" :key="index">
+            <el-form
+                v-for="(attr, index) in attrs"
+                ref="attrs"
+                :model="attr"
+                class="attr"
+                :rules="attrRules"
+                label-width="100px"
+                size="small"
+                :key="index">
                 
                 <div class="item">
                     <el-form-item label="属性名称" prop="name">
@@ -34,8 +51,17 @@
                         <el-checkbox v-model="attr.notNull" label="是否必填" name="type"></el-checkbox>
                         <el-checkbox v-model="attr.unique" v-show="attr.notNull" label="是否唯一" name="type"></el-checkbox>
 
-                        <el-button class="attr-btn" type="text" v-show="attrs.length - 1 === index" @click="addAttr">添加属性</el-button>
-                        <el-button class="attr-btn" type="text" v-show="attrs.length > 1" @click="removeAttr(index)">删除属性</el-button>
+                        <el-button
+                            class="attr-btn"
+                            type="text"
+                            v-show="attrs.length - 1 === index"
+                            @click="addAttr">添加属性</el-button>
+
+                        <el-button
+                            class="attr-btn"
+                            type="text"
+                            v-show="attrs.length > 1"
+                            @click="removeAttr(index)">删除属性</el-button>
                     </div>
                 </div>
 
@@ -58,55 +84,55 @@ export default {
         const valiTableName = async (rule, value, callback) => {
 
             if (value === 'user') {
-                callback(new Error(`数据表名不能为'user',不要问我为什么,自己去看源码`))
-                return
+                callback(new Error(`数据表名不能为'user',不要问我为什么,自己去看源码`));
+                return;
             }
 
             if (value === '') {
-                callback(new Error(`数据表名不能为空`))
-                return
+                callback(new Error(`数据表名不能为空`));
+                return;
             }
 
-            const reg = /^[a-zA-Z_]\w*$/
+            const reg = /^[a-zA-Z_]\w*$/;
             if (!(reg.test(value))) {
-                callback(new Error(`数据表名由字母、下划线开头,字母、数字、下划线组成`))
-                return
+                callback(new Error(`数据表名由字母、下划线开头,字母、数字、下划线组成`));
+                return;
             }
 
-            const resTable = await this.$http.get('/table', { params: {tableName: value} })
+            const resTable = await this.$http.get('/table', { params: {tableName: value} });
             if (resTable.data.length) {
-                callback(new Error('该数据表名已存在'))
-                return
+                callback(new Error('该数据表名已存在'));
+                return;
             }
 
-            callback()
-        }
+            callback();
+        };
 
         const valiAttrname = (rule, value, callback) => {
 
             if (value === '') {
-                callback(new Error(`字段名称不能为空`))
-                return
+                callback(new Error(`字段名称不能为空`));
+                return;
             }
 
-            const reg = /^[a-zA-Z_]\w*$/
+            const reg = /^[a-zA-Z_]\w*$/;
             if (!(reg.test(value))) {
-                callback(new Error(`数据表名由字母、下划线开头,字母、数字、下划线组成`))
-                return
+                callback(new Error(`数据表名由字母、下划线开头,字母、数字、下划线组成`));
+                return;
             }
 
-            let count = 0
+            let count = 0;
             this.attrs.forEach((item) => {
-                if (item.name === value) count++
+                if (item.name === value) count++;
             })
             if (count > 1) {
-                callback(new Error(`字段名称重复`))
-                return
+                callback(new Error(`字段名称重复`));
+                return;
             }
 
-            callback()
+            callback();
 
-        }
+        };
 
         return {
             addTableVisible: false,
@@ -155,42 +181,46 @@ export default {
         },
 
         removeAttr(index) {
-            this.attrs.splice(index, 1)
+            this.attrs.splice(index, 1);
         },
 
         async onsubmit() {
-            if (!(this.validate())) return
+            if (!(this.validate())) return;
 
-            const result = {}
+            const result = {};
 
-            result.tableName = this.formData.tableName
+            result.tableName = this.formData.tableName;
 
-            const attrsRet = []
+            const attrsRet = [];
             
             this.attrs.forEach((item) => {
-                const attr = {}
+                const attr = {};
 
-                attr.name = item.name
+                attr.name = item.name;
 
-                attr.type = item.type
+                attr.type = item.type;
 
-                if (item.type === 'string') attr.default = item.strDefault
-                else if (item.type === 'number') attr.default = item.numDefault
+                if (item.type === 'string') {
+                    attr.default = item.strDefault;
+                }
+                else if (item.type === 'number') {
+                    attr.default = item.numDefault;
+                }
 
-                attr.notNull = item.notNull
+                attr.notNull = item.notNull;
                 
-                attr.unique = item.unique
+                attr.unique = item.unique;
 
-                attrsRet.push(attr)
+                attrsRet.push(attr);
             })
 
-            result.attrs = attrsRet
+            result.attrs = attrsRet;
 
-            this.loading = true
+            this.loading = true;
 
-            const res = await this.$http.post('table', result)
+            const res = await this.$http.post('table', result);
 
-            this.loading = false
+            this.loading = false;
 
             if (res.code === 0) {
                 this.$notify({
@@ -199,20 +229,20 @@ export default {
                     duration: 2000
                 })
 
-                this.addTableVisible = false
+                this.addTableVisible = false;
 
-                this.$emit('reload', result.tableName)
+                this.$emit('reload', result.tableName);
 
-                this.formData = { tableName: '' }
+                this.formData = { tableName: '' };
 
-                this.attrs = [ { name: '', type: 'string', strDefault: '', numDefault: '', notNull: false, unique: false } ]
+                this.attrs = [ { name: '', type: 'string', strDefault: '', numDefault: '', notNull: false, unique: false } ];
 
                 this.$nextTick(() => {
-                    this.$refs.form.clearValidate()
+                    this.$refs.form.clearValidate();
                 
                     Array.prototype.forEach.call(this.$refs.attrs, (item) => {
 
-                        item.clearValidate()
+                        item.clearValidate();
                     })
                 })
 
@@ -222,28 +252,28 @@ export default {
                     title: '数据表创建失败',
                     message: res,message,
                     duration: 2000
-                })
+                });
             }
             
         },
 
         validate() {
-            let flag = true
+            let flag = true;
 
             this.$refs.form.validate((valid) => {
-                flag = valid
+                flag = valid;
             })
 
-            if (!flag) return false
+            if (!flag) return false;
 
             return Array.prototype.every.call(this.$refs.attrs, (item) => {
-                let res
+                let res;
 
                 item.validate((valid) => {
-                    res = valid
+                    res = valid;
                 })
 
-                return res
+                return res;
             })
         }
     }
