@@ -17,9 +17,17 @@
                 v-if="item.name !== 'id'"
                 :key="key"
                 :label="item.name">
-                <el-input v-if="item.type === 'String'" v-model="formData[item.name]"></el-input>
 
-                <el-input-number v-else size="mini" :step="1" v-model="formData[item.name]"></el-input-number>
+                <el-input
+                    v-if="item.type === 'String'"
+                    v-model="formData[item.name]"></el-input>
+
+                <el-input-number
+                    v-else
+                    size="mini"
+                    :step="1"
+                    v-model="formData[item.name]"></el-input-number>
+
             </el-form-item>
         </el-form>
 
@@ -43,18 +51,18 @@ export default {
 
     methods: {
         async save() {
-            let result = null
+            let result = null;
 
-            const id = this.formData.id
+            const id = this.formData.id;
 
-            delete this.formData.id
+            delete this.formData.id;
 
-            const attrData = JSON.stringify(this.formData)
+            const attrData = JSON.stringify(this.formData);
 
             if (id) {
-                result = await this.$http.put(`./data/${this.targetTable}`, { id, newAttrData: attrData })
+                result = await this.$http.put(`./data/${this.targetTable}`, { id, newAttrData: attrData });
             } else {
-                result = await this.$http.post(`./data/${this.targetTable}`, { attrData })
+                result = await this.$http.post(`./data/${this.targetTable}`, { attrData });
             }
 
             if (result.code === 0) {
@@ -65,9 +73,9 @@ export default {
                     duration: 2000
                 })
 
-                this.$emit('reload')
+                this.$emit('reload');
 
-                this.visible = false
+                this.visible = false;
 
             } else {
 
@@ -85,20 +93,20 @@ export default {
     watch: {
         visible(val) {
             if (val) {
-                this.formData = {}
+                this.formData = {};
 
                 for (let item of this.tableDesc) {
-                    this.$set(this.formData, item.name, item.default)
+                    this.$set(this.formData, item.name, item.default);
                 }
                 
                 if (this.targetData) {
                     for (let key in this.targetData) {
-                        this.$set(this.formData, key, this.targetData[key])                        
+                        this.$set(this.formData, key, this.targetData[key])   ;                     
                     }
                 }
 
             } else {
-                this.$refs.form.clearValidate()
+                this.$refs.form.clearValidate();
             }
         }
     },
@@ -120,7 +128,7 @@ export default {
 
     computed: {
         title() {
-            return this.targetData ? '编辑' : '新建'
+            return this.targetData ? '编辑' : '新建';
         }
     }
 }
