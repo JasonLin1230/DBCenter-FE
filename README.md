@@ -4,7 +4,7 @@
 
 > 预览地址 [http://dbcenter.top](http://dbcenter.top)
 
-> 相关项目地址：[后端项目地址](https://github.com/wrz199306/dbcenter-be)
+> 相关项目地址：[后端项目地址](https://github.com/wrz199306/DECenter-BE)
 
 ## 说明
 DBCenter是一个协助前端工程师实现数据持久化存储的后台系统
