@@ -199,9 +199,9 @@ export default {
                     this.tableDesLoading = false;
                 })
 
-                // this.showDataClass = '';
+                this.showDataClass = '';
 
-                // this.$refs.showData.setTableData();
+                this.$refs.showData.setTableData();
 
             },            
             immediate: true
