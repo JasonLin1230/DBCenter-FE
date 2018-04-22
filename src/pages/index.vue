@@ -7,7 +7,7 @@
 
         <ul class="tools">
             <li>
-                <a class="topic" href="https://github.com/wrz199306/dbcenter" target="_blank">接口文档</a>
+                <a class="topic" href="https://github.com/wrz199306/DECenter-BE" target="_blank">接口文档</a>
             </li>
 
             <li>
