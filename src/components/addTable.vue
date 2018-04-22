@@ -83,11 +83,6 @@ export default {
     data() {
         const valiTableName = async (rule, value, callback) => {
 
-            if (value === 'user') {
-                callback(new Error(`数据表名不能为'user',不要问我为什么,自己去看源码`));
-                return;
-            }
-
             if (value === '') {
                 callback(new Error(`数据表名不能为空`));
                 return;
@@ -99,8 +94,9 @@ export default {
                 return;
             }
 
-            const resTable = await this.$http.get('/table', { params: {tableName: value} });
-            if (resTable.data.length) {
+            const resTable = await this.$http.get(`/table/${value}`);
+
+            if (resTable.code === 0) {
                 callback(new Error('该数据表名已存在'));
                 return;
             }
