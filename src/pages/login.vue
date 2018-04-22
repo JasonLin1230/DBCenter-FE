@@ -40,12 +40,12 @@
                 <el-button @click="submit" :loading="submitLoading" type="primary">登录</el-button>
             </el-form-item>
 
-            <p class="desc">DBCenter是专为前端开发者提供的接口调用平台。可以本系统，添加数据表、数据表字段，通过相应的接口，完成对数据库增删改查的操作。点击查看<a href="https://github.com/wrz199306/dbcenter" target="_blank">接口文档</a></p>
+            <p class="desc">DBCenter是专为前端开发者提供的接口调用平台。可以本系统，添加数据表、数据表字段，通过相应的接口，完成对数据库增删改查的操作。点击查看<a href="https://github.com/wrz199306/DECenter-BE" target="_blank">接口文档</a></p>
         </el-form>
     </div>
 
     <div class="footer">
-        <a href="https://github.com/wrz199306/dbcenter" target="_blank">欢迎STAR, 您的支持是我最大的动力! <br /> https://github.com/wrz199306/dbcenter</a>
+        <a href="https://github.com/wrz199306" target="_blank">欢迎STAR, 您的支持是我最大的动力! <br /> https://github.com/wrz199306</a>
     </div>
 </div>
 </template>
