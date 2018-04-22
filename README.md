@@ -15,7 +15,7 @@ DBCenter是一个协助前端工程师实现数据持久化存储的后台系统
 
 从而轻易地完成简单的数据库操作
 
-查看具体的接口定义,请前往[后端项目地址](https://github.com/wrz199306/dbcenter-be)
+查看具体的接口定义,请前往[后端项目地址](https://github.com/wrz199306/DECenter-BE)
 
 如果对此项目感兴趣,请点击star支持一下 ^_^
 
@@ -27,7 +27,7 @@ DBCenter是一个协助前端工程师实现数据持久化存储的后台系统
 `clone`项目到本地
 
 ```
-git clone https://github.com/wrz199306/dbcenter-fe
+git clone https://github.com/wrz199306/DBCenter-FE
 ```
 
 安装依赖
