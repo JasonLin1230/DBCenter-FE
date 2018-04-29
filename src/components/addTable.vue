@@ -246,7 +246,7 @@ export default {
                 this.$notify({
                     type: 'error',
                     title: '数据表创建失败',
-                    message: res,message,
+                    message: res.message,
                     duration: 2000
                 });
             }
